@@ -15,7 +15,10 @@ int main() {
     printf("Enter %d sorted numbers: ", n);
     for (i = 0; i < n; i++) {
         scanf("%d", &num[i]);
+        
     }
+   
+
 
     // Ask for number to search
     printf("Enter number to search: ");
@@ -39,9 +42,8 @@ int main() {
             right = mid - 1;
         }
     }
-
     if (found != -1) {
-        printf("Number found at index %d\n", found);
+        printf("Number found at index [%d]\n", found);
     } else {
         printf("Number not found.\n");
     }
