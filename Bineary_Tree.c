@@ -58,10 +58,33 @@ Node *create_tree(){
     add_right_child(seven,six);
     return six;
 }
+
+void inorder_node(Node *node){
+    if(node->left != NULL){
+        inorder_node(node->left);
+    }
+    printf(" -> %d ",node->data);
+    if(node->right != NULL){
+        inorder_node(node->right);
+    }
+}
+Node *right_node(){
+    Node *nine = create_node(9);
+    Node *eleven = create_node(11);
+    Node *fifteen = create_node(15);
+    inorder_node(nine);
+    inorder_node(eleven);
+    inorder_node(fifteen);
+    return nine;
+}
+
+
 int main(){
     Node *root = create_tree();
     Node *post_order = Ptree();
-    printf("%d\n",root->data);
-    printf("%d\n",post_order->data);
+    Node *inorder_node = right_node();
+    printf("ROOT = %d\n",root->data);
+    printf("POST =%d\n",post_order->data);
+    printf("ORDER = %d\n",inorder_node->data);
     return 0;
 }
