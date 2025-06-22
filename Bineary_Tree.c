@@ -23,6 +23,29 @@ void add_left_child(Node *node,Node *child){
 void add_right_child(Node *node, Node *child){
     node->right = child;
 }
+
+void post_order(Node *node){
+    if(node->left !=NULL){
+        post_order(node->left);
+    }
+    if(node->right != NULL){
+        post_order(node->right);
+    }
+    printf("%d",node->data);
+}
+
+Node *Ptree(){
+    Node *three = create_node(4);
+    Node *five = create_node(5);
+    Node *eight = create_node(8);
+    Node *ten = create_node(10);
+    post_order(three);
+    post_order(ten);
+    post_order(eight);
+    return ten;
+}
+
+
 Node *create_tree(){
     Node *two = create_node(2);
     Node *seven = create_node(7);
@@ -37,6 +60,8 @@ Node *create_tree(){
 }
 int main(){
     Node *root = create_tree();
+    Node *post_order = Ptree();
     printf("%d\n",root->data);
+    printf("%d\n",post_order->data);
     return 0;
 }
