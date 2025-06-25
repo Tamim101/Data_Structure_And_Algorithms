@@ -117,3 +117,6 @@ int main() {
 
     return 0;
 }
+
+data manupulate ntype
+
