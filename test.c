@@ -1,260 +1,260 @@
-#include <stdio.h>
-void go_south_east(int *lat, int *lon)
-{
- *lat = *lat - 1;
- *lon = *lon + 1;
-}
-int main()
-{
- int latitude = 2;
- int longitude = -64;
- go_south_east(&latitude, &longitude);
- printf("Avast! Now at: [%i, %i]\n", latitude, longitude);
- return 0;
-}
+// #include <stdio.h>
+// void go_south_east(int *lat, int *lon)
+// {
+//  *lat = *lat - 1;
+//  *lon = *lon + 1;
+// }
+// int main()
+// {
+//  int latitude = 2;
+//  int longitude = -64;
+//  go_south_east(&latitude, &longitude);
+//  printf("Avast! Now at: [%i, %i]\n", latitude, longitude);
+//  return 0;
+// }
 
-#include<stdio.h>
+// #include<stdio.h>
 
-void fortune_cookie(char msg[])
-{
- printf("Message reads: %s\n", msg);
-}
-char quote[] = "Cookies make you fat";
+// void fortune_cookie(char msg[])
+// {
+//  printf("Message reads: %s\n", msg);
+// }
+// char quote[] = "Cookies make you fat";
 
-fortune_cookie(quote);
+// fortune_cookie(quote);
 
-#include <stdio.h>
-int main()
-{
- int contestants[] = {1, 2, 3};
- int choice = contestants[0];  // Store the value, not pointer
- contestants[0] = 2;
- contestants[1] = contestants[2];
- contestants[2] = choice;
- printf("I'm going to pick contestant number %i\n", contestants[0]);
- return 0;
-}
-
-
-#include <stdio.h>
- char main()
-{
-char buffer[100];
-printf("Enter your name: ");
-fgets(buffer, 100, stdin);
-printf("You entered: %s", buffer);
-
-return 0;
-}
+// #include <stdio.h>
+// int main()
+// {
+//  int contestants[] = {1, 2, 3};
+//  int choice = contestants[0];  // Store the value, not pointer
+//  contestants[0] = 2;
+//  contestants[1] = contestants[2];
+//  contestants[2] = choice;
+//  printf("I'm going to pick contestant number %i\n", contestants[0]);
+//  return 0;
+// }
 
 
+// #include <stdio.h>
+//  char main()
+// {
+// char buffer[100];
+// printf("Enter your name: ");
+// fgets(buffer, 100, stdin);
+// printf("You entered: %s", buffer);
 
-#include<stdio.h>
-int main()
-{
-    char masked_raider[] = "Tamim khan is here";
-    char *Tamim = masked_raider;
-    printf("masked raider is %s,Tamim is %s\n" ,masked_raider,Tamim);
-    masked_raider[0] = 'H';
-    masked_raider[1] = 'E';
-    masked_raider[2] = 'L';
-    masked_raider[3] = 'L';
-    masked_raider[4] = 'O';
-    printf("Mask rider is %s,Tamim is %s",masked_raider,Tamim);
-    return 0;
-}
-#include<stdio.h>
-char main()
-{
-    char Tamim[100];
-    printf("Enter favorite food: ");
-    fgets(Tamim,sizeof(Tamim),stdin);
-    printf("%p",Tamim);
-    return 0 ;
-}
+// return 0;
+// }
 
-#include <stdio.h>
-#include <string.h>
 
-char tracks[][80] = {
-    "I left my heart in Harvard Med School",
-    "Newark, Newark - a wonderful town",
-    "Dancing with a Dork",
-    "From here to maternity",
-    "The girl from Iwo Jima",
-};
 
-void find_track(char search_for[]) {
-    for (int i = 0; i < 5; i++) {
-        if (strstr(tracks[i], search_for)) {
-            printf("track %i: '%s'\n", i, tracks[i]);
-        }
-    }
-}
+// #include<stdio.h>
+// int main()
+// {
+//     char masked_raider[] = "Tamim khan is here";
+//     char *Tamim = masked_raider;
+//     printf("masked raider is %s,Tamim is %s\n" ,masked_raider,Tamim);
+//     masked_raider[0] = 'H';
+//     masked_raider[1] = 'E';
+//     masked_raider[2] = 'L';
+//     masked_raider[3] = 'L';
+//     masked_raider[4] = 'O';
+//     printf("Mask rider is %s,Tamim is %s",masked_raider,Tamim);
+//     return 0;
+// }
+// #include<stdio.h>
+// char main()
+// {
+//     char Tamim[100];
+//     printf("Enter favorite food: ");
+//     fgets(Tamim,sizeof(Tamim),stdin);
+//     printf("%p",Tamim);
+//     return 0 ;
+// }
 
-int main() {
-    char search_for[80];
-    printf("Search for: ");
-    fgets(search_for, 80, stdin);
+// #include <stdio.h>
+// #include <string.h>
 
-    // Remove trailing newline character if present
-    search_for[strcspn(search_for, "\n")] = '\0';
+// char tracks[][80] = {
+//     "I left my heart in Harvard Med School",
+//     "Newark, Newark - a wonderful town",
+//     "Dancing with a Dork",
+//     "From here to maternity",
+//     "The girl from Iwo Jima",
+// };
 
-    find_track(search_for);
-    return 0;
-}
+// void find_track(char search_for[]) {
+//     for (int i = 0; i < 5; i++) {
+//         if (strstr(tracks[i], search_for)) {
+//             printf("track %i: '%s'\n", i, tracks[i]);
+//         }
+//     }
+// }
 
-#include<stdio.h>
+// int main() {
+//     char search_for[80];
+//     printf("Search for: ");
+//     fgets(search_for, 80, stdin);
 
-int main(){
-    float latitude;
-    float longitude;
-    char info[80];
-    int started = 0 ;
-    puts ("data=[");
-    while (scanf("%f,%f,%79[^\n]",&latitude,&longitude,info)==3){
-        if (started)
-           printf(",\n");
-        else
-            started = 1 ;
-        printf("{latitude: %f, longitude:%f,info:'%s'}",latitude,longitude,info);
+//     // Remove trailing newline character if present
+//     search_for[strcspn(search_for, "\n")] = '\0';
+
+//     find_track(search_for);
+//     return 0;
+// }
+
+// #include<stdio.h>
+
+// int main(){
+//     float latitude;
+//     float longitude;
+//     char info[80];
+//     int started = 0 ;
+//     puts ("data=[");
+//     while (scanf("%f,%f,%79[^\n]",&latitude,&longitude,info)==3){
+//         if (started)
+//            printf(",\n");
+//         else
+//             started = 1 ;
+//         printf("{latitude: %f, longitude:%f,info:'%s'}",latitude,longitude,info);
 
      
-    }
-    puts("\n");
-    return 0 ;
+//     }
+//     puts("\n");
+//     return 0 ;
+
+// // }
+// #include<stdio.h>
+// char main(){
+//     char data[80];
+//     fgets(data,80,stdin);
+//     char dataset = 'y';
+//     char datasets = 't';
+    
+//     switch (data[80])
+//     {
+//     case 'y':
+//         puts("Train");
+//         /* code */
+//         break;
+//     case 't':
+//         puts("how are you");
+//         break;    
+//     default: 
+//         puts("none");
+
+//         break;
+//     }
+//     printf("name %s\n",data);
+//     return 0 ;
+// }
+
+// #include<stdio.h>
+// float total = 0.0;
+// int count = 0;
+// float tax_percent = 6.0;
+
+// float add_with_tax(float f){
+//     float tax_rate = 1 + tax_percent/100;
+//     total = total+(f * tax_rate);
+//     count = count +1 ;
+//     return total;
+
 
 // }
-#include<stdio.h>
-char main(){
-    char data[80];
-    fgets(data,80,stdin);
-    char dataset = 'y';
-    char datasets = 't';
+// int main(){
+//     float val;
+//     printf("Price of item:");
+//     while(scanf("%f",&val)==1){
+//         printf("total so far :%2f\n",add_with_tax(val));
+//         printf("Price of item:");
+
+//     }
+//     printf("\nFinal total:%.2f\n",total);
+//     printf("Number of item:%d\n",count);
+
+//     return 0 ;
+// }
+
+// #include <stdio.h>
+// #include "encrypt.h"
+
+// int main() {
+//     char msg[80];
+
+//     printf("Enter message (Ctrl+D to exit):\n");
+
+//     while (fgets(msg, sizeof(msg), stdin)) {
+//         encrypt(msg);
+//         printf("Encrypted: %s", msg);
+//     }
+
+//     return 0;
+// }
+
+// #include <stdio.h>
+// #include <math.h>
+// int main(){
     
-    switch (data[80])
-    {
-    case 'y':
-        puts("Train");
-        /* code */
-        break;
-    case 't':
-        puts("how are you");
-        break;    
-    default: 
-        puts("none");
+//     double data;
+//     double e = 1;
+//     double x = 1; 
+//     data = pow(e,2)+pow(e,-2)+sin(x)+4 / (5.0 * pow(x,4));
+//     printf("%lf\n",data);
+//     return 0 ;
 
-        break;
-    }
-    printf("name %s\n",data);
-    return 0 ;
-}
+// }
 
-#include<stdio.h>
-float total = 0.0;
-int count = 0;
-float tax_percent = 6.0;
+// #include<stdio.h>
 
-float add_with_tax(float f){
-    float tax_rate = 1 + tax_percent/100;
-    total = total+(f * tax_rate);
-    count = count +1 ;
-    return total;
+// struct perferences{
+//     const char *food;
+//     float exercise_hours;
+// };
+//  struct fish {
+//     const char *name;
+//     const char *species;
+//     int teeth;
+//     int age;
+//     struct preferences care; 
+// };
+// void catalog(struct fish f)
+//     {
+//         printf("%s is a %s whith %i teeth.He is %i\n",f.name,f.species,f.teeth,f.age);
+//         printf("%s likes to eat %s.\n", f.name, f.care.food);
+//         printf("%s likes to exercise for %.2f hours.\n", f.name, f.care.exercise_hours); 
 
-
-}
-int main(){
-    float val;
-    printf("Price of item:");
-    while(scanf("%f",&val)==1){
-        printf("total so far :%2f\n",add_with_tax(val));
-        printf("Price of item:");
-
-    }
-    printf("\nFinal total:%.2f\n",total);
-    printf("Number of item:%d\n",count);
-
-    return 0 ;
-}
-
-#include <stdio.h>
-#include "encrypt.h"
-
-int main() {
-    char msg[80];
-
-    printf("Enter message (Ctrl+D to exit):\n");
-
-    while (fgets(msg, sizeof(msg), stdin)) {
-        encrypt(msg);
-        printf("Encrypted: %s", msg);
-    }
-
-    return 0;
-}
-
-#include <stdio.h>
-#include <math.h>
-int main(){
+//     }
+//     void label(struct fish f) {
+//     printf("Name: %s\nSpecies: %s\n", f.name, f.species);
+// }
+// int main(){
+//      struct fish snappy = {"snappy", "piranha", 69, 4, {"meat", 7.5}};
+//      catalog(snappy);
+//      label(snappy);
+//      return 0 ;
     
-    double data;
-    double e = 1;
-    double x = 1; 
-    data = pow(e,2)+pow(e,-2)+sin(x)+4 / (5.0 * pow(x,4));
-    printf("%lf\n",data);
-    return 0 ;
-
-}
-
-#include<stdio.h>
-
-struct perferences{
-    const char *food;
-    float exercise_hours;
-};
- struct fish {
-    const char *name;
-    const char *species;
-    int teeth;
-    int age;
-    struct preferences care; 
-};
-void catalog(struct fish f)
-    {
-        printf("%s is a %s whith %i teeth.He is %i\n",f.name,f.species,f.teeth,f.age);
-        printf("%s likes to eat %s.\n", f.name, f.care.food);
-        printf("%s likes to exercise for %.2f hours.\n", f.name, f.care.exercise_hours); 
-
-    }
-    void label(struct fish f) {
-    printf("Name: %s\nSpecies: %s\n", f.name, f.species);
-}
-int main(){
-     struct fish snappy = {"snappy", "piranha", 69, 4, {"meat", 7.5}};
-     catalog(snappy);
-     label(snappy);
-     return 0 ;
-    
-    }
+//     }
     
 
-#include <stdio.h>
-typedef struct {
-    const char *name;
-    const char *species;
-    int age;
-}turtle;
-void happy_birthday(turtle t){
-    t.age = t.age+1;
-    printf("Happy Birthday %s! You are now %i years old!\n",t.name,t.age);
+// #include <stdio.h>
+// typedef struct {
+//     const char *name;
+//     const char *species;
+//     int age;
+// }turtle;
+// void happy_birthday(turtle t){
+//     t.age = t.age+1;
+//     printf("Happy Birthday %s! You are now %i years old!\n",t.name,t.age);
 
-}
-int main(){
-    turtle myrtle = {"Myrtle","Leatherback sea turtle",99};
-    happy_birthday(myrtle);
-    printf("%s's age is Now %i\n",myrtle.name,myrtle.age);
-    return 0;
-}
+// }
+// int main(){
+//     turtle myrtle = {"Myrtle","Leatherback sea turtle",99};
+//     happy_birthday(myrtle);
+//     printf("%s's age is Now %i\n",myrtle.name,myrtle.age);
+//     return 0;
+// }
 
 #include <stdio.h>
 
