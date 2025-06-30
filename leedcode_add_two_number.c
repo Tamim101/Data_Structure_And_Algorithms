@@ -76,10 +76,10 @@ int main() {
     struct ListNode* result = addTwoNumbers(l1, l2);
 
     int total = listToInt(l1) + listToInt(l2);
-    printf("Total: %d\n", total);  // Output: 807
+    printf("Total: %d\n", total);  
 
     printf("Result: ");
-    printList(result);  // Should print: 7 -> 0 -> 8
+    printList(result);  
 
     return 0;
 }
