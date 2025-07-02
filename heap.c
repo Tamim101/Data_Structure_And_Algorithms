@@ -73,3 +73,30 @@ int main() {
 
     return 0;
 }
+
+#include <stdio.h>
+int left(int i){
+    return 2* i;
+}
+int right(int i){
+    return 2* i +1;
+}
+void heap_line(int heap[],int heap_size,int i){
+     int l,r;
+     l = left(i);
+     r = right(i);
+     int largest = i;
+     if(i<=heap_size && heap[l] > heap[largest]){
+        return l;
+     }
+     if(i<=heap_size && heap[r]>heap[largest]){
+        return r;
+     }
+     if(largest != i){
+        int t = heap[i];
+        heap[i] = heap[largest];
+        heap[largest] = t;
+        
+     }
+     heap_line(heap,heap_size,i);
+}
