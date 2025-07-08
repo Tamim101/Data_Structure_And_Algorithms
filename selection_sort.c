@@ -32,7 +32,7 @@ int main(){
 
     return 0;
 
-}                                       
+}     
 
 // LEAD CODE OR HAKER RANK  Selection Sort
 int selection_sort(int A[],int i){
@@ -49,6 +49,27 @@ int selection_sort(int A[],int i){
         temp = A[i];
         A[i] = A[index_min];
         A[index_min] = temp;
+    }
+    return 0;
+}
+
+
+//patice code indvisul
+int selection_sort_array(int M[],int i){
+    int min;
+    int n,j,temp;
+    for(i=0;i<n;i++){
+        min = i;
+        for(j=i+1;j<n;j++){
+            M[i]<M[min];
+            min = j;
+        }
+
+    }
+    if(min!=i){
+        temp = M[i];
+        M[i] = M[min];
+        M[min] = temp;
     }
     return 0;
 }
