@@ -1,22 +1,21 @@
-// #include <stdbool.h>
-// bool isPalindrome(int x) {
-//     if(x<0){
-//         return false;
-//     }
-//     int orginal = x;
-//     long long reverse = 0;
-//     while(x!=0){
-//         int digit = x % 10;
-//         reverse = reverse * 10 +digit;
-//         if(reverse > 2147483647){
-//             return false;
-//         }
-//         x = x / 10;
-//     }
-//     return (orginal == reverse);
-//  }
 #include<stdio.h>
-#include<stdbool.h>
+#include <stdbool.h>
+bool isPalindrome(int x) {
+    if(x<0){
+        return false;
+    }
+    int orginal = x;
+    long long reverse = 0;
+    while(x!=0){
+        int digit = x % 10;
+        reverse = reverse * 10 +digit;
+        if(reverse > 2147483647){
+            return false;
+        }
+        x = x / 10;
+    }
+    return (orginal == reverse);
+ }
 bool palindrome_number(int x){
    if(x>0){
     return false;
