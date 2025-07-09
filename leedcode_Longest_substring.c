@@ -5,7 +5,7 @@ int leanth_substring(char* s){
     int last_index[256];
     for(int i = 0;i<256;i++){
         last_index[i] = -1;
-    }
+    } //abcacb //bbxxddbc
     int maxlen = 0;
     int start = 0;
     for(int i = 0;s[i] != '\0';i++){
@@ -58,11 +58,11 @@ char main_leanth_of_list(char* s){
     
 
 }
-// int main(){
-//     char str[100];
-//     printf("enter string = ");
-//     scanf("%s",str);
-//     int result =  main_leanth_of_list(str);
-//     printf("len of the string = %d\n",result);
-//     return 0;
-// }
+int main(){
+    char str[100];
+    printf("enter string = ");
+    scanf("%s",str);
+    int result =  main_leanth_of_list(str);
+    printf("len of the string = %d\n",result);
+    return 0;
+}
