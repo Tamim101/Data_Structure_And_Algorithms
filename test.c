@@ -1,51 +1,51 @@
-// #include <stdio.h>
-// void go_south_east(int *lat, int *lon)
-// {
-//  *lat = *lat - 1;
-//  *lon = *lon + 1;
-// }
-// int main()
-// {
-//  int latitude = 2;
-//  int longitude = -64;
-//  go_south_east(&latitude, &longitude);
-//  printf("Avast! Now at: [%i, %i]\n", latitude, longitude);
-//  return 0;
-// }
+#include <stdio.h>
+void go_south_east(int *lat, int *lon)
+{
+ *lat = *lat - 1;
+ *lon = *lon + 1;
+}
+int main()
+{
+ int latitude = 2;
+ int longitude = -64;
+ go_south_east(&latitude, &longitude);
+ printf("Avast! Now at: [%i, %i]\n", latitude, longitude);
+ return 0;
+}
 
 // #include<stdio.h>
 
-// void fortune_cookie(char msg[])
-// {
-//  printf("Message reads: %s\n", msg);
-// }
-// char quote[] = "Cookies make you fat";
+void fortune_cookie(char msg[])
+{
+ printf("Message reads: %s\n", msg);
+}
+char quote[] = "Cookies make you fat";
 
-// fortune_cookie(quote);
+fortune_cookie(quote);
+
+#include <stdio.h>
+int main()
+{
+ int contestants[] = {1, 2, 3};
+ int choice = contestants[0];  // Store the value, not pointer
+ contestants[0] = 2;
+ contestants[1] = contestants[2];
+ contestants[2] = choice;
+ printf("I'm going to pick contestant number %i\n", contestants[0]);
+ return 0;
+}
+
 
 // #include <stdio.h>
-// int main()
-// {
-//  int contestants[] = {1, 2, 3};
-//  int choice = contestants[0];  // Store the value, not pointer
-//  contestants[0] = 2;
-//  contestants[1] = contestants[2];
-//  contestants[2] = choice;
-//  printf("I'm going to pick contestant number %i\n", contestants[0]);
-//  return 0;
-// }
+ char main()
+{
+char buffer[100];
+printf("Enter your name: ");
+fgets(buffer, 100, stdin);
+printf("You entered: %s", buffer);
 
-
-// #include <stdio.h>
-//  char main()
-// {
-// char buffer[100];
-// printf("Enter your name: ");
-// fgets(buffer, 100, stdin);
-// printf("You entered: %s", buffer);
-
-// return 0;
-// }
+return 0;
+}
 
 
 

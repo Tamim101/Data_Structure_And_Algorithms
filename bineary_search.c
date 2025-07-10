@@ -19,7 +19,6 @@ int main() {
     }
    
 
-
     // Ask for number to search
     printf("Enter number to search: ");
     scanf("%d", &x);
@@ -67,3 +66,5 @@ int binary_scarch(int A[],int n,int x){
     }
     return -1;
 }
+
+
