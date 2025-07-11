@@ -15,12 +15,15 @@ int romanToInt(char* s) {
    int total = 0;
    for(int i = 0; s[i]!= '\0';i++){
     int current_value = value(s[i]); // now current value C = 100 
-    int next_value = value(s[i+1]);  //now next value cI this type intger incriment
+    int next_value = value(s[i+1]);
+       printf("%d",next_value);  //now next value cI this type intger incriment
     if(current_value < next_value){
-        total += next_value - current_value ; // 1000 -100 =900 then ans is 900 when loop 1 this time 1000-100 =900 so total = 1000+ 900 = 1900
+        total += next_value - current_value ;
+        printf("%d",total); // 1000 -100 =900 then ans is 900 when loop 1 this time 1000-100 =900 so total = 1000+ 900 = 1900
         i++; //then i = i+1 ,i incriment  
     }else{
         total += current_value;
+        printf("%d",total);
     }
    }
    return total;
