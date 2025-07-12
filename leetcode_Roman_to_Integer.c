@@ -19,11 +19,10 @@ int romanToInt(char* s) {
        printf("%d",next_value);  //now next value cI this type intger incriment
     if(current_value < next_value){
         total += next_value - current_value ;
-        printf("%d",total); // 1000 -100 =900 then ans is 900 when loop 1 this time 1000-100 =900 so total = 1000+ 900 = 1900
+        printf("%d\n",total); // 1000 -100 =900 then ans is 900 when loop 1 this time 1000-100 =900 so total = 1000+ 900 = 1900
         i++; //then i = i+1 ,i incriment  
     }else{
         total += current_value;
-        printf("%d",total);
     }
    }
    return total;
