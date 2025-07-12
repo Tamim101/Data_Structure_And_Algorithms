@@ -1,6 +1,5 @@
 #include<stdio.h>
-int romanToInt(char* s) {
-   int value(char c){
+int value(char c){
     switch(c){
         case 'I':return 1;
         case 'V': return 5;
@@ -11,7 +10,9 @@ int romanToInt(char* s) {
         case 'M': return 1000;
         default: return 0;
     }
-   } 
+}
+int romanToInt(char* s) {
+    
    int total = 0;
    for(int i = 0; s[i]!= '\0';i++){
     int current_value = value(s[i]); // now current value C = 100 
