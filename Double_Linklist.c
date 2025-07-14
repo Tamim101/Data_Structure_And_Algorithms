@@ -25,6 +25,14 @@ void print_list(Node *head) {
     }
     printf("NULL\n");
 }
+void list_mode(Node *head) {
+    Node *current = head;
+    while (current != NULL) {
+        printf("%d <-> ", current->data);
+        current = current->next;
+    }
+    printf("NULL\n");
+}
 int main() {
     Node *a, *b, *c, *d, *head;
 
