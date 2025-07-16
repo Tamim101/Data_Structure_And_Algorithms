@@ -49,6 +49,17 @@ void free_table(){
         }
     }
 }
+void search_table(){
+    for(int i = 0;i< TABLE_SIZE;i++){
+        node_t* current = hash_table[i];
+        while(current){
+            node_t* temp = current;
+            current = current->next;
+            free(temp->key);
+            free(temp);
+        }
+    }
+}
 int main() {
 
     insert("apple", 10);
