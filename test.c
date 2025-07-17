@@ -738,3 +738,13 @@ int main() {
     return 0;
    
 }
+#include<stdio.h>
+#include<math.h>
+int main(){
+    int max_a = 10;
+    int max_b = 3;
+    double result;
+    result = sqrt(max_a*max_a + max_b*max_b);
+    printf("Total = %.2f\n",result);
+    return 0;
+}
