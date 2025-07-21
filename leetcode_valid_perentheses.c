@@ -1,9 +1,9 @@
 #include<stdio.h>
 #include<string.h>
 #include<stdbool.h>
-
+#define MAX 10001
 bool isValid(char* s) {
-   char stack[1000];
+   char stack[MAX];
    int top = -1;   
    for(int i=0;s[i] != '\0';i++){
     char c = s[i];
