@@ -30,11 +30,30 @@ int main(){
   return 0;
 }
 
-void incriment(int *p){
-    *p = *p+1;
+#include<stdio.h>
+int sum_of_element(int A[]){
+    int i,sum = 0;
+    int size = sizeof(A) / sizeof(A[0]);
+    for(i = 0; i< size; i++){
+        sum += A[i];
+        printf("sum2 = %d\n",sum);
+
+    }
+    printf("sum = %d\n",sum);
+    return sum;
 }
 int main(){
-    int a = 10;  // global
-    incriment(&a);
-    printf("a = %d",a);
+    int A[] = {1,2,3,4,5};
+    int total = sum_of_element(A);
+    printf("sum of element = %d\n",total);
+}
+
+#include<stdio.h>
+int main(){
+    int arr[] = {100,200,3,4};
+    printf("%d\n",&arr[0]);
+    printf("%d\n",arr);
+    printf("%d\n",&*(arr+1));
+    printf("%d\n",arr[1]);
+    return 0;
 }
