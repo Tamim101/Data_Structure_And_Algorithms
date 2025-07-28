@@ -29,6 +29,16 @@ int main(){
   printf("x = %d\n",x);
   return 0;
 }
+#include<stdio.h>
+int main(){
+    int i = 0;
+    for(i = 0 ; i<100;i++){
+        int *sum = 0;
+        sum += i;
+        printf("sum = %d\n",&sum);
+    }
+    return 0;
+}
 
 #include<stdio.h>
 int sum_of_element(int A[]){
