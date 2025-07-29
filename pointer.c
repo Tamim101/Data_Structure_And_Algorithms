@@ -41,6 +41,16 @@ int main(){
 }
 
 #include<stdio.h>
+int main(){
+    int i = 0;
+    for(i = 0 ; i<100;i++){
+        int *q = 0;
+        q += i;
+        printf("sum = %d\n",&q);
+    }
+    return 0;
+}
+#include<stdio.h>
 int sum_of_element(int A[]){
     int i,sum = 0;
     int size = sizeof(A) / sizeof(A[0]);
