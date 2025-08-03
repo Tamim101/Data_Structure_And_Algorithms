@@ -11,7 +11,7 @@ int strStr(char* haystack, char* needle){
     for(int i = 0; i<=haystack_len - needle_len; i++){
         int j;
         for(j = 0; j < needle_len; j++){
-            if(haystack[i+j] != needle[j]){
+            if(haystack[ i+j] !=needle[j]){
                 break;
             }
         }
@@ -35,4 +35,13 @@ int main(){
     strStr(haystack,needle);
     return 0;
 }
-
+int main(){
+    char haystack[100];
+    char needle[100];
+    printf("enter the string =");
+    scanf("%s",haystack);
+    printf("enter the string =");
+    scanf("%s",needle);
+    strStr(haystack,needle);
+    return 0;
+}
