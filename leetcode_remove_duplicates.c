@@ -27,3 +27,14 @@ int main(){
     printf("\nNEW LENGTH = %d\n",remove_length);
     return 0;
 }
+int main(){
+    int nums[] = {1,1,2,2,3,4,4,5};
+    int size = sizeof(nums) / sizeof(nums[0]);
+    int remove_length = remove_duplicates(nums,size);  // just call remove_duplicates value
+    printf("AFTER REMOVING DUPLICATES : ");
+    for(int i = 0; i < remove_length; i++){
+        printf("%d",nums[i]);
+    }
+    printf("\nNEW LENGTH = %d\n",remove_length);
+    return 0;
+}
