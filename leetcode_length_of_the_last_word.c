@@ -20,10 +20,3 @@ int main() {
     printf("Length of '%s' is %d\n", str, len);
     return 0;
 }
-
-int main() {
-    char *str = "hello world now i have ";
-    int len = length_of_last_world(str);
-    printf("Length of '%s' is %d\n", str, len);
-    return 0;
-}
