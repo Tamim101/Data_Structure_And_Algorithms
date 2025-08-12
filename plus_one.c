@@ -6,6 +6,7 @@ int* plusOne(int* digits, int digitsSize, int* returnSize) {
     for(i = 0; i < digitsSize; i++){
         if(digits[i] != ','){
             digits[i] = digits[i]+1;
+            return digits;
         }
     }
 }
