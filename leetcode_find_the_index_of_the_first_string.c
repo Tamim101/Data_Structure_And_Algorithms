@@ -35,13 +35,3 @@ int main(){
     strStr(haystack,needle);
     return 0;
 }
-int main(){
-    char haystack[100];
-    char needle[100];
-    printf("enter the string =");
-    scanf("%s",haystack);
-    printf("enter the string =");
-    scanf("%s",needle);
-    strStr(haystack,needle);
-    return 0;
-}
