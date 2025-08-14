@@ -24,3 +24,8 @@ int main(){
     return 0;
 
 }
+
+#include<stdio.h>
+int insert_data(int nums[],int length, int key,int capacity){
+
+}
