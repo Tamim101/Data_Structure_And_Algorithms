@@ -53,3 +53,39 @@ int main(){
     return 0;
 
 }
+
+#include <stdio.h>
+#include <stdint.h>
+
+void insert_data(uint8_t nums[], uint8_t length, uint8_t key, uint8_t poshion) {
+    
+    for (uint8_t i = length - 1; i >= poshion; i--) {
+        nums[i + 1] = nums[i];
+    }
+    nums[poshion] = key;
+}
+
+int main() {
+    uint8_t array[6] = {2, 4, 1, 8, 5}; 
+    uint8_t length = 5;
+
+    printf("Before insert:\n");
+    for (uint8_t i = 0; i < length; i++) {
+        printf("%d ", array[i]);
+    }
+    printf("\n");
+
+    uint8_t key = 12;
+    uint8_t poshion = 4;
+
+    insert_data(array, length, key, poshion);
+    length++; 
+
+    printf("After insert:\n");
+    for (uint8_t i = 0; i < length; i++) {
+        printf("%d ", array[i]);
+    }
+    printf("\n");
+
+    return 0;
+}
