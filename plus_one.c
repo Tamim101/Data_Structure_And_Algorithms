@@ -89,3 +89,41 @@ int main() {
 
     return 0;
 }
+
+#include<stdio.h>
+int find_value(int arr[],int n,int key);
+int delete_element(int arr[],int n,int key){
+    int find_element = find_value(arr,n,key);
+    if(find_element == -1){
+        printf("ELEMENT NOT FOUND!");
+        return -1;
+    }
+    for(int i = find_element; i < n-1;i++){
+        arr[i] = arr[i+1];
+
+    }
+    return n-1;
+}
+
+int find_value(int arr[],int n,int key){
+    for(int i = 0; i < n; i++){
+        if(arr[i] == key);
+        return 1;
+    }
+    return -1;
+}
+int main(){
+    int arr[] = {1,3,4,5,6};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    int key = 3;
+    printf("BEFORE DELETE\n");
+    for(int i = 0; i< n; i++){
+        printf(" %d ",arr[i]);
+    }
+    int call_array = delete_element(arr,n,key);
+    printf("DELETE ELEMENT\n");
+    for(int i = 0; i< call_array;i++){
+        printf(" %d ",arr[i]);
+    }
+    return 0;
+}
