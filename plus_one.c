@@ -130,23 +130,45 @@
 
 
 // solved plus 1 
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+
 #include<stdio.h>
-int plusOne(int *digits[], int digitsSize, int *returnSize) {
+#include<stdlib.h>
+int* plusOne(int* digits, int digitsSize, int* returnSize) {
     int i;
-    for(i = digitsSize -1; i< digits;i-- ){
-        (digits[i]  + 1);
-         printf("new = %d ",digits[i]);
+    int carry = 1;
+    for(i = digitsSize -1; i>= 0;i-- ){
+        digits[i] += carry;
+        if(digits[i]>=10){
+            digits[i] = 0;
+            carry = 1;
+        }else{
+            carry = 0;
+            break;
+        }
     }
-    returnSize = 2;
-    return 0;
-}
+    if(carry == 1){
+        int *new_array = (int*)malloc(sizeof(int)*(digitsSize +1));
+        new_array[0] = 1;
+        for(int i = 0; i<digitsSize;i++){
+            new_array[i + 1] = digits[i];
+        }
+        *returnSize = digitsSize + 1;
+        return new_array;
+    }
+    *returnSize = digitsSize;
+    return digits;  
+         
+    }
 int main(){
     int digits[] = {1,4,6,7};
-    int returnSize = 2;
     int len = sizeof(digits) / sizeof(digits[0]);
-    int array = plusOne(digits,len,returnSize);
+    int array = plusOne(digits,len);
     for(int i = 0; i< len;i++ ){
-        printf("%d ",digits[i]);
+        // printf("%d ",digits[i]);
+
     }
     return 0;
 }
