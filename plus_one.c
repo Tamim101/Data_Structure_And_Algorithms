@@ -131,17 +131,20 @@
 
 // solved plus 1 
 #include<stdio.h>
-int plusOne(int digits[], int digitsSize) {
+int plusOne(int *digits[], int digitsSize, int *returnSize) {
     int i;
     for(i = digitsSize -1; i< digits;i-- ){
-        printf("%d ",i);
+        (digits[i]  + 1);
+         printf("new = %d ",digits[i]);
     }
+    returnSize = 2;
     return 0;
 }
 int main(){
     int digits[] = {1,4,6,7};
+    int returnSize = 2;
     int len = sizeof(digits) / sizeof(digits[0]);
-    int array = plusOne(digits,len);
+    int array = plusOne(digits,len,returnSize);
     for(int i = 0; i< len;i++ ){
         printf("%d ",digits[i]);
     }
