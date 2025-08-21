@@ -112,21 +112,21 @@
 //     }
 //     return -1;
 // }
-// int main(){
-//     int arr[] = {1,3,4,5,6};
-//     int n = sizeof(arr) / sizeof(arr[0]);
-//     int key = 3;
-//     printf("BEFORE DELETE\n");
-//     for(int i = 0; i< n; i++){
-//         printf(" %d ",arr[i]);
-//     }
-//     int call_array = delete_element(arr,n,key);
-//     printf("DELETE ELEMENT\n");
-//     for(int i = 0; i< call_array;i++){
-//         printf(" %d ",arr[i]);
-//     }
-//     return 0;
-// }
+int main(){
+    int arr[] = {1,3,4,5,6};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    int key = 3;
+    printf("BEFORE DELETE\n");
+    for(int i = 0; i< n; i++){
+        printf(" %d ",arr[i]);
+    }
+    int call_array = delete_element(arr,n,key);
+    printf("DELETE ELEMENT\n");
+    for(int i = 0; i< call_array;i++){
+        printf(" %d ",arr[i]);
+    }
+    return 0;
+}
 
 
 // solved plus 1 
