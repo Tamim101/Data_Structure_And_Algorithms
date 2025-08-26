@@ -77,3 +77,29 @@ int main(){
 //     printf("result = %d",call_array);
 //     return call_array;
 // }
+
+// 56789
+#include<stdio.h>
+int main(){
+    int main_array[] = {5,8,2,5,1,9,55,8,44};
+    int lenght_array = sizeof(main_array) / sizeof(main_array[0]);
+    for(int i = 0; i < lenght_array -1;i++){
+        int main_index = i;
+        for(int j = i+1; j < lenght_array;j++){
+            if(main_array[j] < main_array[main_index]){
+                main_index = i;
+            }
+        }
+        int min_value = main_index;
+        for(int k = 0; k > i; k--){
+            main_array[k] = main_array[k-1];
+        }
+        main_array[i] = min_value;
+    }
+    printf("sortade array");
+    for(int i = 0; i< lenght_array;i++){
+        printf("array %d",main_array[i]);
+
+    }
+    return 0;
+}
