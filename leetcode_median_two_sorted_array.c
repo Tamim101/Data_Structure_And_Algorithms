@@ -103,3 +103,23 @@ int main(){
     }
     return 0;
 }
+
+int main(){
+    int array1[] = {1,4,3,55,221,12,44,5};
+    int length_array = sizeof(array1) / sizeof(array1[0]);
+    for(int i  = 0; i < length_array ; i++){
+        int main_index = i;
+        for(int j = i + 1; j < length_array; j++){
+            if(array1[j] < array1[main_index]){
+                main_index = j;
+            }
+        }
+        int temp = array1[i];
+        array1[i] = array1[main_index];
+        array1[main_index] = temp;
+    }
+    for(int k = 0; k < length_array; k++){
+        printf("%d",array1[k]);
+    }
+    return 0;
+}
