@@ -123,3 +123,23 @@ int main(){
     }
     return 0;
 }
+
+int main(){
+    int array_index[] = {1,5,3,2,6};
+    int len_array_index = sizeof(array_index) / sizeof(array_index[0]);
+    for(int i = 0; i < len_array_index ; i++){
+        int instart_sort = i;
+        int max_value = array_index[i];
+        int j = i - 1;
+        while(j >= 0 && array_index[j] < max_value){
+            array_index[j + 1] = array_index[i];
+            instart_sort = j;
+            j--;
+        }
+
+    }
+    for(int i = 0; i < len_array_index;i++){
+        printf("%d",array_index[i]);
+    }
+    return 0;
+}
