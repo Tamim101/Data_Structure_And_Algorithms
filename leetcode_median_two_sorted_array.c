@@ -143,3 +143,42 @@ int main(){
     }
     return 0;
 }
+
+// quick sort 
+void quick_sort(int array[],int low , int high);
+int next_array(int array[],int low, int high);
+int main(){
+    int array[] = {3,4,22,5,55,43,2};
+    int length = sizeof(array) / sizeof(array[0]);
+    quick_sort(array,0,length - 1);
+    printf("after");
+    for(int i = 0; i < length; i++){
+        printf("quick sort %d", array[i]);
+    }
+    return 0;
+}
+void quick_sort(int array[],int low, int high){
+    if(low < high){
+        int main_array = next_array(array,low,high);
+        quitck_sort(array,low,main_array - 1);
+        quick_sort(array,main_array -1,high);
+    }
+}
+int next_array(int array[],int low,int high){
+    int high_value = array[high];
+    int low_value = low -1;
+    for(int j = low; j < high ; j++){
+        if(array[j]<= high_value){
+            int temp = array[low_value];
+            array[low_value] = array[j];
+            array[j] = temp;
+
+        }
+        
+    }
+    int temp = array[low_value -1];
+    array[low_value + 1] = array[high];
+    array[high] = temp;
+    return low_value + 1;
+
+}
