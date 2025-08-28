@@ -160,7 +160,7 @@ int main(){
 void quick_sort(int array[],int low, int high){
     if(low < high){
         int main_array = next_array(array,low,high);
-        quitck_sort(array,low,main_array - 1);
+        quick_sort(array,low,main_array - 1);
         quick_sort(array,main_array -1,high);
     }
 }
@@ -169,10 +169,15 @@ int next_array(int array[],int low,int high){
     int low_value = low -1;
     for(int j = low; j < high ; j++){
         if(array[j]<= high_value){
+            low_value ++;
             int temp = array[low_value];
             array[low_value] = array[j];
             array[j] = temp;
 
+        }else{
+            int temp = array[low_value + 1];
+            array[low_value -1] = array[j];
+            array[j] = temp;
         }
         
     }
@@ -180,5 +185,6 @@ int next_array(int array[],int low,int high){
     array[low_value + 1] = array[high];
     array[high] = temp;
     return low_value + 1;
+    
 
 }
