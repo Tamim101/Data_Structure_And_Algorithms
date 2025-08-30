@@ -35,41 +35,52 @@ int longestPalindrome(char s[]) {
 
     return 0;
 }
-int main() {
-    char s[] = "babad";
-    if(longestPalindrome(s)){
-        printf("[%s] is a palindrome\n", s);
-    } else {
-        printf("[%s] is not a palindrome\n", s);
-    }
-    return 0;
-}
+// int main() {
+//     char s[] = "babad";
+//     if(longestPalindrome(s)){
+//         printf("[%s] is a palindrome\n", s);
+//     } else {
+//         printf("[%s] is not a palindrome\n", s);
+//     }
+//     return 0;
+// }
 
 // array = 1,3,4,5,6,3,2,1,2
 //   output = 1,1,2,2,3,3,4,5,6
 #include<stdio.h>
-int counting_sort(int array[],int lenght){
-    int array[] = {1,3,4,5,6,3,2,1,2};
-    int length = sizeof(array) / sizeof(array[0]);
+void counting_sort(int array[],int lenght){
+    int array1[] = {1,3,4,5,6,3,2,1,2};
+    int length = sizeof(array1) / sizeof(array1[0]);
     int max_len=0;
     for(int i = 1; i < lenght; i++){
-        if(array[i]> max_len){
-            max_len = array[i];
+        if(array1[i]> max_len){
+            max_len = array1[i];
         }
     }
     int count[max_len + 1];
     for(int i = 0; i <= count;i++){
-       array[i] = 0;
+       array1[i] = 0;
     }
     for(int i = 0; i < lenght;i++){
-        count[array[i]]++;
+        count[array1[i]]++;
     }
     int index = 0;
     for(int i = 0 ; i <= max_len; i++){
        while(count[i]>0){
-         array[index++] = i;
+         array1[index++] = i;
          count[i]--;
+
        }
     }
-}
+ 
 
+}
+int main(){
+    int array1[] = {1,3,4,53,32,22,1,6,66,67,221,123,4444,4445,1111111,23,2,1};
+    int len_size = sizeof(array1) / sizeof(array1[0]);
+    counting_sort(array1,len_size);
+    for(int i = 0; i < len_size;i++){
+        printf("array list = %d",array1[i]);
+    }
+    return 0;
+}
