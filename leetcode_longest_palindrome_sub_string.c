@@ -86,15 +86,60 @@
 
 #include<stdio.h>
 #include<stdlib.h>
-#define SIZE 8
+#define SIZE 100
 void radix_sort_array(int data[], int len_size){
-    int max_value = 0;
+    int max_value = data[0];
     for(int i = 1; i < len_size; i++){   // find the large data in the array
         if(data[i] > max_value){
             max_value = data[i];
         }
     }
-    
+    int equation_exc = 1;
+    int *bucket [10];
+    for(int i = 0; i < 10;i++){
+       bucket[i] = (int*)malloc(sizeof(int) * len_size);  // make a 10 bucket
+    }
+    int counts[10] = {0};
+    while(max_value / equation_exc > 0){
+        for(int i = 0; i < len_size;i++){
+            int bucket_data_limit = (data[i] / equation_exc) % 10;
+            bucket[bucket_data_limit][counts[bucket_data_limit]] = data[i];
+            counts[bucket_data_limit]++;
+        }
+        int position_data = 0;
+        for(int i = 0; i < 10;i++){
+            for(int j = 0; j < counts[i];j++){
+                data[position_data] = bucket[i][j];
+                position_data ++;
+            }
+            counts[i]=0;
+
+        }
+        equation_exc *= 10;
+
+    }
+    for(int i = 0; i < 10; i++){
+        free(bucket[i]);
+    }
+
+
+}
+int main(){
+    int data[] = {123,35,23,54,32,34534,65768,4353,24234,23231,3345,234234,2313,34235};
+    int len = sizeof(data)/ sizeof(data[0]);
+    printf("orginal array = ");
+    for(int i = 0; i < len; i++){
+        printf(" %d ",data[i]);
+    }
+    printf("\n");
+    radix_sort_array(data,len);
+    printf("redix array = ");
+    for(int i = 0; i < len; i++){
+        printf(" %d ",data[i]);
+    }
+    printf("\n");
+    return 0;
+
 }
 
 
