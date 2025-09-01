@@ -147,7 +147,16 @@
 void marged_sort(double arr[],int start , int end);
 void marged_array(double arr[],int start, int mid,int end);
 int main(){
-    
+    int array[] = {1,44,3,4,66,7,8,5,4,3,667,665,444};
+    int length = sizeof(array) / sizeof(array[0]);
+    for(int i = 0; i < length; i++){
+        printf("after array = %d",array[i]);
+    }
+    marged(array,0,length-1);
+    printf("before\n");
+    for(int i = 0; i < length; i++){
+        printf("sorted array %d",array[i]);
+    }    
 }
 
 
