@@ -158,7 +158,22 @@ int main(){
         printf("sorted array %d",array[i]);
     }    
 }
-
+void marged_sort(double arr[],int start,int end){
+    if(start < end){
+        int mid = (start + end) / 2;
+        marged_sort(arr,start,end);
+        marged_sort(arr,mid+1,end);
+        marged_sort(arr,start,mid,end);
+    }
+}
+void marged_sort(double arr[],int start,int end){
+    if(start < end){
+        int mid = (start + end) / 2;
+        marged_sort(arr,start,end);
+        marged_sort(arr,mid+1,end);
+        marged_sort(arr,start,mid,end);
+    }
+}
 
 
 
