@@ -143,7 +143,6 @@
 // }
 
 #include<stdio.h>
-
 void marged_sort(double arr[],int start , int end);
 void marged_array(double arr[],int start, int mid,int end);
 int main(){
@@ -174,34 +173,13 @@ void marged_sort(double arr[],int start,int end){
         marged_sort(arr,start,mid,end);
     }
 }
-//
-void marged_sort(double arr[],int start,int end){
-    if(start < end){
-        int mid = (start + end) / 2;
-        marged_sort(arr,start,end);
-        marged_sort(arr,mid+1,end);
-        marged_sort(arr,start,mid,end);
-    }
-}
-void marged_sort(double arr[],int start,int end){
-    if(start < end){
-        int mid = (start + end) / 2;
-        marged_sort(arr,start,end);
-        marged_sort(arr,mid+1,end);
-        marged_sort(arr,start,mid,end);
-    }
-}
-int main(){
-    int array[] = {1,44,553,23,55};
-    int length  = sizeof(array) / sizeof(array[0]);
-    for(int i = 0; i < length; i++):
-        printf("%d",array[i]);
 
-}   
-    printf("data array apply");
-    for(int j = 0; j < length; j++){
-        printf("data array done",array[i]);
-    }
+
+
+
+
+
+
 
 
 
