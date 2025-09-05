@@ -82,7 +82,7 @@ int main(){
     return 0;
 }
 
-// radix sort 
+ radix sort 
 
 #include<stdio.h>
 #include<stdlib.h>
@@ -200,8 +200,46 @@ void marged_array(int arr[],int start , int mid,int end){
     }
 }
 
+// pointer
+#include<stdio.h>
+struct student{
+    int id;
+    char name[20];
+    float cgpA;
 
+};
+int main(){
+    struct student s = {1,"Tamim khan",3.89};
+    struct student *ptr = &s;
+    printf("%d %s  %.2f", ptr->id,ptr->name,ptr->cgpA);
+}
+struct array
 
+struct sencor{
+    int id;
+    float value;
+};
+struct address{
+    char city[20];
+    int zip;
+};
+struct student{
+    int id;
+    struct address ass;
+};
+int main(){
+    struct sencor data[3] = {
+        {1,56.7},
+        {2,46.2},
+        {3,66.6654}
+    };
+    struct student s1 = {1,{"dhaka",9046}};
+    printf("id = %d\n city = %s\n zip code = %d\n",s1.id,s1.ass.city,s1.ass.zip);
+    for(int i = 0; i < 3; i++){
+       printf("id = %d\nvalue = %0.2f\n",data[i].id,data[i].value);
+    }
+    
+}
 
 
 
