@@ -1,245 +1,245 @@
-// #include<stdio.h>
-// #include<string.h>
-// int longestPalindrome(char s[]) {
-//     int length = strlen(s);
-//     printf("length = %d\n",length);
-//     int start = 0;
-//     int end = length -1;
-//     while(start < end){
-//         if(s[start]!= s[end]){
-//             return 0;
-//         }
-//         start++;
-//         end--;
-//         return 1;
-//     }
-//     int max_len = 0;
-//     int save_len = 0;
-//     for(int i = 0; i <= s; i++){
-//         for(int j = i; j <= s; j--){
-//             if((s,i,j) && (j-i+1) < max_len){
-//                 max_len = j-i+1;
-//                 printf("max_len = %c\n", max_len);
+#include<stdio.h>
+#include<string.h>
+int longestPalindrome(char s[]) {
+    int length = strlen(s);
+    printf("length = %d\n",length);
+    int start = 0;
+    int end = length -1;
+    while(start < end){
+        if(s[start]!= s[end]){
+            return 0;
+        }
+        start++;
+        end--;
+        return 1;
+    }
+    int max_len = 0;
+    int save_len = 0;
+    for(int i = 0; i <= s; i++){
+        for(int j = i; j <= s; j--){
+            if((s,i,j) && (j-i+1) < max_len){
+                max_len = j-i+1;
+                printf("max_len = %c\n", max_len);
 
-//                 save_len = i;
-//             }
-//         }
-//     }
-//     for(int k = 0; k < save_len + max_len ; k++){
-//         printf("main array %c\n", s[k]);
-//     }
-//     printf("\n");
+                save_len = i;
+            }
+        }
+    }
+    for(int k = 0; k < save_len + max_len ; k++){
+        printf("main array %c\n", s[k]);
+    }
+    printf("\n");
 
-//     return 0;
-// }
-// int main() {
-//     char s[] = "babad";
-//     if(longestPalindrome(s)){
-//         printf("[%s] is a palindrome\n", s);
-//     } else {
-//         printf("[%s] is not a palindrome\n", s);
-//     }
-//     return 0;
-// }
+    return 0;
+}
+int main() {
+    char s[] = "babad";
+    if(longestPalindrome(s)){
+        printf("[%s] is a palindrome\n", s);
+    } else {
+        printf("[%s] is not a palindrome\n", s);
+    }
+    return 0;
+}
 
-// // array = 1,3,4,5,6,3,2,1,2
-// //   output = 1,1,2,2,3,3,4,5,6
-// #include<stdio.h>
-// void counting_sort(int array1[],int lenght){
-//     int max_len=0;
-//     for(int i = 1; i < lenght; i++){
-//         if(array1[i]> max_len){
-//             max_len = array1[i];
-//         }
-//     }
-//     int count[max_len + 1];
-//     for(int i = 0; i <= max_len;i++){
-//        count[i] = 0;
-//     }
-//     for(int i = 0; i < lenght;i++){
-//         count[array1[i]]++;
-//     }
-//     int index = 0;
-//     for(int i = 0 ; i <= max_len; i++){
-//        while(count[i]>0){
-//          array1[index++] = i;
-//          count[i]--;
+array = 1,3,4,5,6,3,2,1,2
+  output = 1,1,2,2,3,3,4,5,6
+#include<stdio.h>
+void counting_sort(int array1[],int lenght){
+    int max_len=0;
+    for(int i = 1; i < lenght; i++){
+        if(array1[i]> max_len){
+            max_len = array1[i];
+        }
+    }
+    int count[max_len + 1];
+    for(int i = 0; i <= max_len;i++){
+       count[i] = 0;
+    }
+    for(int i = 0; i < lenght;i++){
+        count[array1[i]]++;
+    }
+    int index = 0;
+    for(int i = 0 ; i <= max_len; i++){
+       while(count[i]>0){
+         array1[index++] = i;
+         count[i]--;
 
-//        }
-//     }
+       }
+    }
  
 
-// }
-// int main(){
-//     int array1[] = {13,34,756765,2,233,77,99,00,33,1,88,00,7,0,-0,7,767,998,32432,8};
-//     int len_size = sizeof(array1) / sizeof(array1[0]);
-//     counting_sort(array1,len_size);
-//      printf("Sorted array: ");
-//     for(int i = 0; i < len_size;i++){
-//         printf(" %d ",array1[i]);
-//     }
-//     printf("\n");
-//     return 0;
-// }
+}
+int main(){
+    int array1[] = {13,34,756765,2,233,77,99,00,33,1,88,00,7,0,-0,7,767,998,32432,8};
+    int len_size = sizeof(array1) / sizeof(array1[0]);
+    counting_sort(array1,len_size);
+     printf("Sorted array: ");
+    for(int i = 0; i < len_size;i++){
+        printf(" %d ",array1[i]);
+    }
+    printf("\n");
+    return 0;
+}
 
-//  radix sort 
+ radix sort 
 
-// #include<stdio.h>
-// #include<stdlib.h>
-// #define SIZE 100
-// void radix_sort_array(int data[], int len_size){
-//     int max_value = data[0];
-//     for(int i = 1; i < len_size; i++){   // find the large data in the array
-//         if(data[i] > max_value){
-//             max_value = data[i];
-//         }
-//     }
-//     int equation_exc = 1;
-//     int *bucket [10];
-//     for(int i = 0; i < 10;i++){
-//        bucket[i] = (int*)malloc(sizeof(int) * len_size);  // make a 10 bucket
-//     }
-//     int counts[10] = {0};
-//     while(max_value / equation_exc > 0){
-//         for(int i = 0; i < len_size;i++){
-//             int bucket_data_limit = (data[i] / equation_exc) % 10;
-//             bucket[bucket_data_limit][counts[bucket_data_limit]] = data[i];
-//             counts[bucket_data_limit]++;
-//         }
-//         int position_data = 0;
-//         for(int i = 0; i < 10;i++){
-//             for(int j = 0; j < counts[i];j++){
-//                 data[position_data] = bucket[i][j];
-//                 position_data ++;
-//             }
-//             counts[i]=0;
+#include<stdio.h>
+#include<stdlib.h>
+#define SIZE 100
+void radix_sort_array(int data[], int len_size){
+    int max_value = data[0];
+    for(int i = 1; i < len_size; i++){   // find the large data in the array
+        if(data[i] > max_value){
+            max_value = data[i];
+        }
+    }
+    int equation_exc = 1;
+    int *bucket [10];
+    for(int i = 0; i < 10;i++){
+       bucket[i] = (int*)malloc(sizeof(int) * len_size);  // make a 10 bucket
+    }
+    int counts[10] = {0};
+    while(max_value / equation_exc > 0){
+        for(int i = 0; i < len_size;i++){
+            int bucket_data_limit = (data[i] / equation_exc) % 10;
+            bucket[bucket_data_limit][counts[bucket_data_limit]] = data[i];
+            counts[bucket_data_limit]++;
+        }
+        int position_data = 0;
+        for(int i = 0; i < 10;i++){
+            for(int j = 0; j < counts[i];j++){
+                data[position_data] = bucket[i][j];
+                position_data ++;
+            }
+            counts[i]=0;
 
-//         }
-//         equation_exc *= 10;
+        }
+        equation_exc *= 10;
 
-//     }
-//     for(int i = 0; i < 10; i++){
-//         free(bucket[i]);
-//     }
+    }
+    for(int i = 0; i < 10; i++){
+        free(bucket[i]);
+    }
 
 
-// }
-// int main(){
-//     int data[] = {123,35,23,54,32,34534,65768,4353,24234,23231,3345,234234,2313,34235};
-//     int len = sizeof(data)/ sizeof(data[0]);
-//     printf("orginal array = ");
-//     for(int i = 0; i < len; i++){
-//         printf(" %d ",data[i]);
-//     }
-//     printf("\n");
-//     radix_sort_array(data,len);
-//     printf("redix array = ");
-//     for(int i = 0; i < len; i++){
-//         printf(" %d ",data[i]);
-//     }
-//     printf("\n");
-//     return 0;
+}
+int main(){
+    int data[] = {123,35,23,54,32,34534,65768,4353,24234,23231,3345,234234,2313,34235};
+    int len = sizeof(data)/ sizeof(data[0]);
+    printf("orginal array = ");
+    for(int i = 0; i < len; i++){
+        printf(" %d ",data[i]);
+    }
+    printf("\n");
+    radix_sort_array(data,len);
+    printf("redix array = ");
+    for(int i = 0; i < len; i++){
+        printf(" %d ",data[i]);
+    }
+    printf("\n");
+    return 0;
 
-// }
+}
 
-// #include<stdio.h>
-// void marged_sort(int arr[],int start , int end);
-// void marged_array(int arr[],int start, int mid,int end);
-// int main(){
-//     int array[] = {1,44,3,4,66,7,8,5,4,3};
-//     int length = sizeof(array) / sizeof(array[0]);
-//     for(int i = 0; i < length; i++){
-//         printf(" %d ",array[i]);
-//     }
-//     marged_sort(array,0,length-1);
-//     printf("before\n");
-//     for(int i = 0; i < length; i++){
-//         printf(" %d ",array[i]);
-//     }    
-// }
-// void marged_sort(int arr[],int start,int end){
-//     if(start < end){
-//         int mid = (start + end) / 2;
-//         marged_sort(arr,start,mid);
-//         marged_sort(arr,mid+1,end);
-//         marged_array(arr,start,mid,end);
-//     }
-// }
-// void marged_array(int arr[],int start , int mid,int end){
-//     int i,j,k;
-//     int n1 = mid - start + 1;
-//     int n2 = end - mid;
-//     int left[n1], right[n2];
-//     for(i =0;i < n1;i++){
-//         left[i] = arr[start + i];
-//     }
-//     for(j = 0 ; j<n2;j++){
-//         right[j] = arr[mid+1+j];
-//     }
-//     i = 0;
-//     j = 0;
-//     k = start;
-//     while(i<n1 && j < n2){
-//         if(left[i] <= right[j]){
-//             arr[k++] = left[i++];
+#include<stdio.h>
+void marged_sort(int arr[],int start , int end);
+void marged_array(int arr[],int start, int mid,int end);
+int main(){
+    int array[] = {1,44,3,4,66,7,8,5,4,3};
+    int length = sizeof(array) / sizeof(array[0]);
+    for(int i = 0; i < length; i++){
+        printf(" %d ",array[i]);
+    }
+    marged_sort(array,0,length-1);
+    printf("before\n");
+    for(int i = 0; i < length; i++){
+        printf(" %d ",array[i]);
+    }    
+}
+void marged_sort(int arr[],int start,int end){
+    if(start < end){
+        int mid = (start + end) / 2;
+        marged_sort(arr,start,mid);
+        marged_sort(arr,mid+1,end);
+        marged_array(arr,start,mid,end);
+    }
+}
+void marged_array(int arr[],int start , int mid,int end){
+    int i,j,k;
+    int n1 = mid - start + 1;
+    int n2 = end - mid;
+    int left[n1], right[n2];
+    for(i =0;i < n1;i++){
+        left[i] = arr[start + i];
+    }
+    for(j = 0 ; j<n2;j++){
+        right[j] = arr[mid+1+j];
+    }
+    i = 0;
+    j = 0;
+    k = start;
+    while(i<n1 && j < n2){
+        if(left[i] <= right[j]){
+            arr[k++] = left[i++];
        
-//         }
-//         else{
-//             arr[k++] = right[j++];
+        }
+        else{
+            arr[k++] = right[j++];
          
-//         }
+        }
    
-//     }
-//     while(i < n1){
-//         arr[k++] = left[i++];
+    }
+    while(i < n1){
+        arr[k++] = left[i++];
      
-//     }
-//     while(j<n2){
-//         arr[k++] = right[j++];
+    }
+    while(j<n2){
+        arr[k++] = right[j++];
       
-//     }
-// }
+    }
+}
 
-// // pointer
-// #include<stdio.h>
-// struct student{
-//     int id;
-//     char name[20];
-//     float cgpA;
+// pointer
+#include<stdio.h>
+struct student{
+    int id;
+    char name[20];
+    float cgpA;
 
-// };
-// int main(){
-//     struct student s = {1,"Tamim khan",3.89};
-//     struct student *ptr = &s;
-//     printf("%d %s  %.2f", ptr->id,ptr->name,ptr->cgpA);
-// }
-// struct array
+};
+int main(){
+    struct student s = {1,"Tamim khan",3.89};
+    struct student *ptr = &s;
+    printf("%d %s  %.2f", ptr->id,ptr->name,ptr->cgpA);
+}
+struct array
 
-// struct sencor{
-//     int id;
-//     float value;
-// };
-// struct address{
-//     char city[20];
-//     int zip;
-// };
-// struct student{
-//     int id;
-//     struct address ass;
-// };
-// int main(){
-//     struct sencor data[3] = {
-//         {1,56.7},
-//         {2,46.2},
-//         {3,66.6654}
-//     };
-//     struct student s1 = {1,{"dhaka",9046}};
-//     printf("id = %d\n city = %s\n zip code = %d\n",s1.id,s1.ass.city,s1.ass.zip);
-//     for(int i = 0; i < 3; i++){
-//        printf("id = %d\nvalue = %0.2f\n",data[i].id,data[i].value);
-//     }
+struct sencor{
+    int id;
+    float value;
+};
+struct address{
+    char city[20];
+    int zip;
+};
+struct student{
+    int id;
+    struct address ass;
+};
+int main(){
+    struct sencor data[3] = {
+        {1,56.7},
+        {2,46.2},
+        {3,66.6654}
+    };
+    struct student s1 = {1,{"dhaka",9046}};
+    printf("id = %d\n city = %s\n zip code = %d\n",s1.id,s1.ass.city,s1.ass.zip);
+    for(int i = 0; i < 3; i++){
+       printf("id = %d\nvalue = %0.2f\n",data[i].id,data[i].value);
+    }
     
-// }
+}
 
 #include<stdio.h>
 #include<stdlib.h> 
@@ -249,7 +249,7 @@ struct sensor_data {
     char name[20];
     float value;
 };
-// logger data 
+
 struct sensor_data *data = NULL;
 int main(){
     int n;
@@ -278,10 +278,84 @@ int main(){
     return 0;
 }
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
+// Union for multiple value types
+union sensor_value {
+    int int_val;
+    float float_val;
+    char str_val[20];
+};
 
+// Structure for sensor data
+struct sensor_data_type1 {
+    int id;
+    char name[20];
+    char type;  // 'i' = int, 'f' = float, 's' = string
+    union sensor_value value;
+};
 
+int main() {
+    int n;
 
+    printf("How many sensors: ");
+    scanf("%d", &n);
 
+    // Dynamic memory allocation
+    struct sensor_data_type1 *data1 = (struct sensor_data_type1 *)malloc(n * sizeof(struct sensor_data_type1));
+    if (data1 == NULL) {
+        printf("Memory allocation failed!\n");
+        return 1;
+    }
 
+    // Taking input
+    for (int i = 0; i < n; i++) {
+        data1[i].id = i + 1;
 
+        printf("\nSensor %d Name: ", i + 1);
+        scanf("%s", data1[i].name);
+
+        printf("Sensor %d Type (int=i, float=f, string=s): ", i + 1);
+        scanf(" %c", &data1[i].type);  // NOTE: space before %c
+
+        if (data1[i].type == 'i') {
+            printf("Enter integer value: ");
+            scanf("%d", &data1[i].value.int_val);
+        }
+        else if (data1[i].type == 'f') {
+            printf("Enter float value: ");
+            scanf("%f", &data1[i].value.float_val);
+        }
+        else {
+            printf("Enter string value: ");
+            scanf("%s", data1[i].value.str_val);
+        }
+    }
+
+    // Printing Sensor Data in Table Format
+    printf("\n==================== SENSOR DATA ====================\n");
+    printf("| ID | Name            | Type |       Value       |\n");
+    printf("-----------------------------------------------------\n");
+
+    for (int i = 0; i < n; i++) {
+        printf("| %2d | %-15s |  %c   | ", data1[i].id, data1[i].name, data1[i].type);
+
+        if (data1[i].type == 'i') {
+            printf("%-15d |\n", data1[i].value.int_val);
+        }
+        else if (data1[i].type == 'f') {
+            printf("%-15.2f |\n", data1[i].value.float_val);
+        }
+        else {
+            printf("%-15s |\n", data1[i].value.str_val);
+        }
+    }
+
+    printf("=====================================================\n");
+
+    // Free allocated memory
+    free(data1);
+    return 0;
+}
