@@ -359,3 +359,72 @@ int main() {
     free(data1);
     return 0;
 }
+struct sensor_data_type1 {
+    int id;
+    char name[20];
+    char type;  // 'i' = int, 'f' = float, 's' = string
+    union sensor_value value;
+};
+
+int main() {
+    int n;
+
+    printf("How many sensors: ");
+    scanf("%d", &n);
+
+    // Dynamic memory allocation
+    struct sensor_data_type1 *data1 = (struct sensor_data_type1 *)malloc(n * sizeof(struct sensor_data_type1));
+    if (data1 == NULL) {
+        printf("Memory allocation failed!\n");
+        return 1;
+    }
+
+    // Taking input
+    for (int i = 0; i < n; i++) {
+        data1[i].id = i + 1;
+
+        printf("\nSensor %d Name: ", i + 1);
+        scanf("%s", data1[i].name);
+
+        printf("Sensor %d Type (int=i, float=f, string=s): ", i + 1);
+        scanf(" %c", &data1[i].type);  // NOTE: space before %c
+
+        if (data1[i].type == 'i') {
+            printf("Enter integer value: ");
+            scanf("%d", &data1[i].value.int_val);
+        }
+        else if (data1[i].type == 'f') {
+            printf("Enter float value: ");
+            scanf("%f", &data1[i].value.float_val);
+        }
+        else {
+            printf("Enter string value: ");
+            scanf("%s", data1[i].value.str_val);
+        }
+    }
+
+    // Printing Sensor Data in Table Format
+    printf("\n==================== SENSOR DATA ====================\n");
+    printf("| ID | Name            | Type |       Value       |\n");
+    printf("-----------------------------------------------------\n");
+
+    for (int i = 0; i < n; i++) {
+        printf("| %2d | %-15s |  %c   | ", data1[i].id, data1[i].name, data1[i].type);
+
+        if (data1[i].type == 'i') {
+            printf("%-15d |\n", data1[i].value.int_val);
+        }
+        else if (data1[i].type == 'f') {
+            printf("%-15.2f |\n", data1[i].value.float_val);
+        }
+        else {
+            printf("%-15s |\n", data1[i].value.str_val);
+        }
+    }
+
+    printf("=====================================================\n");
+
+    // Free allocated memory
+    free(data1);
+    return 0;
+}
