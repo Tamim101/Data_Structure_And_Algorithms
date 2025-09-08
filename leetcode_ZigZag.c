@@ -1,23 +1,46 @@
 #include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
 char* convert(char* s, int numRows) {
-    int k ;
-    for(int i = 0;i < k;i++){
-        for(int j = j-1; j < i;j--);
-        s[j] = s[i-1]
-
+    if(numRows == 1){
+        printf("%s",&s);
+        return 0;
     }
+    int len = strlen(s);
+    int row[numRows][len];
+    char *bucket[numRows];
+    int count[numRows];
+    for(int i = 0; i < numRows; i++){
+        bucket[i] = (char*)malloc((sizeof(char)*(len+1)));
+        count[i] = 0;
+    }
+    int current_row = 0;
+    int going_row = 1;
+    for(int i = 0; i < len;i++){
+        if(row[current_row] +i){
+
+        }else if(row[current_row -1]){
+
+        }else(row[current_row == 0]){
+
+        }
+    } 
+    current_row ++;
+    going_row --;
+    return 0;
+
 
     
 }
 int main(){
-    char strings[20] = {"abcdefg"};
-    int numrows = 3;
-    for(char i = 0; i < numrows;i++){
-        printf("data = %s",strings[i]);
+    char strings[] = "abcdefg";
+    int numrows = 2;
+    for(int i = 0; i < numrows;i++){
+        printf("data = %c\n",strings[i]);
     }
-    printf("zigzag data");
-     for(char i = 0; i < numrows;i++){
-        printf("data = %s",strings[i]);
+    convert(strings,numrows);
+    for(int i = 0; i < numrows;i++){
+        printf("data = %c\n",strings[i]);
     }
     return 0;
 }
