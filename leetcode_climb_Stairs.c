@@ -21,6 +21,9 @@ int main(){
      int n = {4};
      climbStairs(n);
      printf("data = %d",climbStairs(n));
+     for(int i = 3; i < n;i++){
+      printf("data %d\n",climbStairs(n));
+     }
      return 0;
 }
 
