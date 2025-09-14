@@ -1,4 +1,5 @@
 #include<stdio.h>
+#include<stdlib.h>
 int climbStairs(int n){
    if (n <= 2){
     return n;
@@ -15,6 +16,13 @@ int climbStairs(int n){
     // printf("data = %d\n",min_value);
    }
    return total_value;
+}
+int *bucket(int array,int len,int right,int left){
+   for(int i = 0; i < n; i++){
+      bucket[i] = (int *) malloc(size_of *(int(len+1)));
+      int count[i] = 0;
+   }
+
 }
 
 int main(){
