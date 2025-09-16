@@ -79,3 +79,20 @@ int main(){
 }
 
 
+int *bucket(int array,int len,int right,int left){
+   for(int i = 0; i < n; i++){
+      bucket[i] = (int *) malloc(size_of *(int(len+1)));
+      int count[i] = 0;
+   }
+
+}
+
+int main(){
+     int n = {4};
+     climbStairs(n);
+     printf("data = %d",climbStairs(n));
+     for(int i = 3; i < n;i++){
+      printf("data %d\n",climbStairs(n));
+     }
+     return 0;
+}
