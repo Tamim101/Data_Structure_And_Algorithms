@@ -53,12 +53,36 @@ typedef struct Node{
 }Node;
 void traversen_and_print(Node* head){
     Node* current_node = head;
-    while(current_node){
+    while(current_node != NULL){
         printf("%d ->",current_node->data);
         current_node = current_node->next;
     }
     printf("NULL\n");
 }
+
+
+// delete node 
+
+Node* delete_specific_node(Node* head, Node* nodetodelete){
+    if(head == nodetodelete){
+        Node* newhead = head->next;
+        free(head);
+        return newhead;
+    }
+    Node* current_node = head->next;
+    while(current_node->next && current_node->next != nodetodelete){
+        current_node = current_node->next;
+    }
+    if(current_node->next == NULL){
+        return head;
+    }
+    Node* temp = current_node->next;
+    current_node->next = current_node->next->next;
+    free(temp);
+    return head;
+
+}
+
 int main(){
     Node* node1 = (Node*)malloc(sizeof(Node));
     node1->data = 7;
@@ -75,12 +99,52 @@ int main(){
     node3->next = node4;
     node4->next = node5;
     node5->next = NULL;
+    printf("before data :\n ");
+    traversen_and_print(node1);
+
+    delete_specific_node(node1,node4);
+    printf("After data :\n ");
     traversen_and_print(node1);
     free(node1);
     free(node2);
     free(node3);
-    free(node4);
     free(node5);
     return 0;
 }
 
+// struct Node{
+//     int data ;
+//     struct Node* next;
+
+// };
+// int find_lowest_value(struct Node* head){
+//     int main_value = head->data;
+//     struct Node* currentNode = head->next;
+//     while(currentNode){
+//         if(currentNode->data < main_value){
+//             main_value = currentNode->data;
+//         }
+//         currentNode = currentNode->next;
+        
+//     }
+//     return main_value;
+// }
+// int main(){
+//     struct Node* node1 = (struct Node*)malloc(sizeof(struct Node));
+//     struct Node* node2 = (struct Node*)malloc(sizeof(struct Node));
+//     struct Node* node3 = (struct Node*)malloc(sizeof(struct Node));
+//     struct Node* node4 = (struct Node*)malloc(sizeof(struct Node));
+    
+//     node1->data = 7;
+//     node2->data =11;
+//     node3->data =3;
+//     node4->data = 2;
+    
+//     node1->next = node2;
+//     node2->next = node3;
+//     node3->next = node4;
+//     node4->next = NULL;
+//     printf("the lowest value is = %d\n",find_lowest_value(node1));
+//     return 0;
+
+// }
