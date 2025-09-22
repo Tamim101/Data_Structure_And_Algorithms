@@ -82,6 +82,24 @@ Node* delete_specific_node(Node* head, Node* nodetodelete){
     return head;
 
 }
+Node* delete_spacifi_node2(Node* head, Node* node2todelete){
+    if(head == node2todelete){
+        Node* new_node = head->next;
+        free(head);
+        return new_node;
+    }
+    Node* current_node = head->next;
+    while(current_node->next && current_node->next != node2todelete){
+        current_node = current_node->next;
+    }
+    if(current_node->next = NULL){
+        return head;
+    }
+    Node* temp = current_node->next;
+    current_node->next = current_node->next->next;
+    free(temp);
+    return head;
+}
 
 int main(){
     Node* node1 = (Node*)malloc(sizeof(Node));
