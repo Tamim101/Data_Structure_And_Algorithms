@@ -61,76 +61,76 @@
 // }
 
 // leetcode problem 
-#include<stdio.h>
-#include<stdlib.h>
-struct ListNode {
-    int val;
-    struct ListNode* next;
-};
-void traversen_and_print(struct ListNode* head){
-    struct ListNode* current_node = head;
-    while(current_node != NULL){
-        printf("%d ->",current_node->val);
-        current_node = current_node->next;
-    }
-    printf("NULL\n");
-}
-struct ListNode* removeNthFromEnd(struct ListNode* head, int n) {
-       int length = 0;
-       struct ListNode* temp = head;
-       while(temp != NULL){
-        length++;
-        temp = temp->next;
+// #include<stdio.h>
+// #include<stdlib.h>
+// struct ListNode {
+//     int val;
+//     struct ListNode* next;
+// };
+// void traversen_and_print(struct ListNode* head){
+//     struct ListNode* current_node = head;
+//     while(current_node != NULL){
+//         printf("%d ->",current_node->val);
+//         current_node = current_node->next;
+//     }
+//     printf("NULL\n");
+// }
+// struct ListNode* removeNthFromEnd(struct ListNode* head, int n) {
+//        int length = 0;
+//        struct ListNode* temp = head;
+//        while(temp != NULL){
+//         length++;
+//         temp = temp->next;
 
-       }
-       if(n == length){
-        struct ListNode*  new_node = head->next;
-        free(head);
-        return new_node;
-       }
-       temp = head;
-       for(int i = 1; i < length-n; i++){
-        temp = temp->next;
+//        }
+//        if(n == length){
+//         struct ListNode*  new_node = head->next;
+//         free(head);
+//         return new_node;
+//        }
+//        temp = head;
+//        for(int i = 1; i < length-n; i++){
+//         temp = temp->next;
 
-       }
-       struct ListNode* del = temp->next;
-       temp->next = temp->next->next;
-       free(del);
-       return head;
-}
-
-
-int main() {
-    struct ListNode* head = malloc(sizeof(struct ListNode));   // Create linked list
-    head->val = 1;
-    head->next = malloc(sizeof(struct ListNode));
-    head->next->val = 2;
-    head->next->next = malloc(sizeof(struct ListNode));
-    head->next->next->val = 3;
-    head->next->next->next = malloc(sizeof(struct ListNode));
-    head->next->next->next->val = 4;
-    head->next->next->next->next = malloc(sizeof(struct ListNode));
-    head->next->next->next->next->val = 5;
-    head->next->next->next->next->next = NULL;
-
-    printf("Original List: ");
-    traversen_and_print(head);
-
-    int n = 3; 
-    head = removeNthFromEnd(head, n);
-
-    printf("After removing %dth node from end: ", n);
-    traversen_and_print(head);
+//        }
+//        struct ListNode* del = temp->next;
+//        temp->next = temp->next->next;
+//        free(del);
+//        return head;
+// }
 
 
-    while (head != NULL) {
-        struct ListNode* temp = head;
-        head = head->next;
-        free(temp);
-    }
+// int main() {
+//     struct ListNode* head = malloc(sizeof(struct ListNode));   // Create linked list
+//     head->val = 1;
+//     head->next = malloc(sizeof(struct ListNode));
+//     head->next->val = 2;
+//     head->next->next = malloc(sizeof(struct ListNode));
+//     head->next->next->val = 3;
+//     head->next->next->next = malloc(sizeof(struct ListNode));
+//     head->next->next->next->val = 4;
+//     head->next->next->next->next = malloc(sizeof(struct ListNode));
+//     head->next->next->next->next->val = 5;
+//     head->next->next->next->next->next = NULL;
 
-    return 0;
-}
+//     printf("Original List: ");
+//     traversen_and_print(head);
+
+//     int n = 3; 
+//     head = removeNthFromEnd(head, n);
+
+//     printf("After removing %dth node from end: ", n);
+//     traversen_and_print(head);
+
+
+//     while (head != NULL) {
+//         struct ListNode* temp = head;
+//         head = head->next;
+//         free(temp);
+//     }
+
+//     return 0;
+// }
 // // delete node 
 
 // Node* delete_specific_node(Node* head, Node* nodetodelete){
@@ -239,3 +239,97 @@ int main() {
 
 
 // leetcode problem solved with 
+#include <stdio.h>
+#include <stdlib.h>
+
+struct ListNode {
+    int val;
+    struct ListNode* next;
+};
+
+// Create linked list using loop
+struct ListNode* createList(int n) {
+    struct ListNode* head = NULL;
+    struct ListNode* temp = NULL;
+    struct ListNode* current = NULL;
+
+    for (int i = 1; i <= n; i++) {
+        temp = malloc(sizeof(struct ListNode));
+        temp->val = i;
+        temp->next = NULL;
+
+        if (head == NULL) {
+            head = temp;
+            current = head;
+        } else {
+            current->next = temp;
+            current = current->next;
+        }
+    }
+    return head;
+}
+
+// Print linked list
+void traversen_and_print(struct ListNode* head) {
+    struct ListNode* current_node = head;
+    while (current_node != NULL) {
+        printf("%d -> ", current_node->val);
+        current_node = current_node->next;
+    }
+    printf("NULL\n");
+}
+
+// Remove Nth node from end
+struct ListNode* removeNthFromEnd(struct ListNode* head, int n) {
+    int length = 0;
+    struct ListNode* temp = head;
+
+    // Find length
+    while (temp != NULL) {
+        length++;
+        temp = temp->next;
+    }
+
+    // If head needs to be removed
+    if (n == length) {
+        struct ListNode* new_head = head->next;
+        free(head);
+        return new_head;
+    }
+
+    // Find (length - n)th node
+    temp = head;
+    for (int i = 1; i < length - n; i++) {
+        temp = temp->next;
+    }
+
+    struct ListNode* del = temp->next;
+    temp->next = temp->next->next;
+    free(del);
+
+    return head;
+}
+
+int main() {
+    int n = 5;
+    struct ListNode* head = createList(n);
+
+    printf("Original List: ");
+    traversen_and_print(head);
+
+    int remove_n = 3; // remove 3rd node from end
+    head = removeNthFromEnd(head, remove_n);
+
+    printf("After removing %dth node from end: ", remove_n);
+    traversen_and_print(head);
+
+    // Free all nodes
+    while (head != NULL) {
+        struct ListNode* temp = head;
+        head = head->next;
+        free(temp);
+    }
+
+    return 0;
+}
+
