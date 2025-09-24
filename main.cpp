@@ -206,4 +206,41 @@ void loop(){
 }
 
 
+SemaphoreHandle_t serialMutex;
 
+void Task_printer(void *pvParameters) {
+  int id = (int)(intptr_t)pvParameters;
+
+  for (;;) {
+    if (xSemaphoreTake(serialMutex, portMAX_DELAY) == pdTRUE) {
+      Serial.printf("[task %d] start printing .....\n", id);
+      Serial.printf("[task %d] line a\n", id);
+      Serial.printf("[task %d] line b\n", id);
+      Serial.printf("[task %d] end printing...\n\n", id);
+      xSemaphoreGive(serialMutex);
+    }
+
+  
+    vTaskDelay((500 + id * 200) / portTICK_PERIOD_MS);
+  }
+}
+
+void setup() {
+  Serial.begin(115200);
+  delay(1000); 
+
+ 
+  serialMutex = xSemaphoreCreateMutex();
+  if (serialMutex == NULL) {
+    Serial.println("Mutex creation failed!");
+    while (1) { vTaskDelay(1000 / portTICK_PERIOD_MS); }
+  }
+
+
+  xTaskCreate(Task_printer, "Task1", 2048, (void *)(intptr_t)1, 2, NULL);
+  xTaskCreate(Task_printer, "Task2", 2048, (void *)(intptr_t)2, 1, NULL);
+}
+
+void loop() {
+
+}
