@@ -166,3 +166,44 @@ void loop(){
 
 }
 
+
+// counting semaphore
+#define NUM_TASKS 5
+const int ledpins[NUM_TASKS] = {2,4,5,18,19};
+SemaphoreHandle_t countingSem;
+
+void worker_task(void *pvParameters){
+  int id = (int)(intptr_t)pvParameters;
+  pinMode(ledpins[id],OUTPUT);
+  for(;;){
+    Serial.printf("task %d: waiting for resource...\n",id);
+    if(xSemaphoreTake(countingSem,portMAX_DELAY)==pdTRUE){
+      Serial.printf("task %d: accquired resorce - endtring id\n",id);
+      for(int i = 0; i < 3; i++){
+        digitalWrite(ledpins[id],HIGH);
+        vTaskDelay(200 / portTICK_PERIOD_MS);
+        digitalWrite(ledpins[id],LOW);
+        vTaskDelay(200 / portTICK_PERIOD_MS);
+      }
+      Serial.printf("task %d: releasing resource\n",id);
+      xSemaphoreGive(countingSem);
+   
+
+    }
+    vTaskDelay((1000 + id * 200) / portTICK_PERIOD_MS);
+  }
+}
+void setup(){
+  Serial.begin(115200);
+  countingSem = xSemaphoreCreateCounting(2,2);
+  for(int  i = 0; i < NUM_TASKS; i++){
+    xTaskCreate(worker_task,"worker",1000,(void *)(intptr_t)i,1,NULL);
+  }
+ 
+}
+void loop(){
+  
+}
+
+
+
