@@ -131,4 +131,38 @@ void loop(){
 
 }
 
+// add semaphore
+SemaphoreHandle_t xButtonSemaphore;
+
+void Task_Led(void *pvParamerters){
+  pinMode(2,OUTPUT);
+  while(1){
+    if(xSemaphoreTake(xButtonSemaphore,portMAX_DELAY)==pdTRUE){
+      digitalWrite(2, !digitalRead(2));
+      Serial.println("Led is started by button press");
+
+    }
+  }
+}
+
+void Task_Button(void *pvParameters){
+  pinMode(4, INPUT_PULLDOWN);
+  while(1){
+    if(digitalRead(4) == LOW){
+      xSemaphoreGive(xButtonSemaphore);
+      vTaskDelay(200 / portTICK_PERIOD_MS);
+    }
+    vTaskDelay(50 / portTICK_PERIOD_MS);
+  }
+}
+void setup(){
+  Serial.begin(115200);
+  xButtonSemaphore = xSemaphoreCreateBinary();
+  xTaskCreate(Task_Button,"button task",1000,NULL,1,NULL);
+  xTaskCreate(Task_Led,"led task",1000,NULL,1,NULL);
+}
+
+void loop(){
+
+}
 
