@@ -244,3 +244,56 @@ void setup() {
 void loop() {
 
 }
+
+#include <Arduino.h>
+#include "freertos/FreeRTOS.h"
+#include "freertos/event_groups.h"
+
+EventGroupHandle_t systemEventGroup;
+
+#define SENSOR_READY   (1 << 0)  // bit 0
+#define WIFI_READY     (1 << 1)  // bit 1
+
+void Task_Sensor(void *pvParameters) {
+  vTaskDelay(2000 / portTICK_PERIOD_MS); 
+  Serial.println("Sensor initialized ");
+  xEventGroupSetBits(systemEventGroup, SENSOR_READY);
+  vTaskDelete(NULL);
+}
+
+void Task_WiFi(void *pvParameters) {
+  vTaskDelay(4000 / portTICK_PERIOD_MS); 
+  Serial.println("Wi-Fi connected ");
+  xEventGroupSetBits(systemEventGroup, WIFI_READY);
+  vTaskDelete(NULL);
+}
+
+void Task_Coordinator(void *pvParameters) {
+  Serial.println("Coordinator waiting for Sensor + Wi-Fi...");
+
+  xEventGroupWaitBits(
+    systemEventGroup,
+    SENSOR_READY | WIFI_READY, 
+    pdFALSE,                   
+    pdTRUE,                    
+    portMAX_DELAY            
+  );
+
+  Serial.println("All systems ready Starting main application!");
+  vTaskDelete(NULL);
+}
+
+void setup() {
+  Serial.begin(115200);
+  vTaskDelay(1000 / portTICK_PERIOD_MS);
+  systemEventGroup = xEventGroupCreate();
+
+  xTaskCreate(Task_Sensor, "Sensor", 2048, NULL, 1, NULL);
+  xTaskCreate(Task_WiFi, "WiFi", 2048, NULL, 1, NULL);
+  xTaskCreate(Task_Coordinator, "Coordinator", 2048, NULL, 2, NULL);
+}
+
+void loop() {
+
+}
+
