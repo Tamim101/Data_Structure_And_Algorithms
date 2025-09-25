@@ -343,3 +343,36 @@ void setup(){
 void loop(){
   
 }
+TaskHandle_t ledTaskHandle = NULL;
+void Task_sensor(void *paramerters){
+  pinMode(4,INPUT_PULLUP);
+  while(1){
+    int sensor_value = random(0,100);
+    xTaskNotify(ledTaskHandle,sensor_value,eSetValueWithoutOverwrite);
+    vTaskDelay(1000 / portTICK_PERIOD_MS);
+  }
+}
+
+void task_led(void *pvParameters){
+  pinMode(2,OUTPUT);
+  uint32_t receivedValue;
+  while(1){
+    if(xTaskNotifyWait(0,0,&receivedValue,portMAX_DELAY) == pdTRUE){
+      Serial.printf("[led task] got the sensor value: %d\n",receivedValue);
+      if(receivedValue > 50){
+        digitalWrite(2,HIGH);
+      }else{
+        digitalWrite(2,LOW);
+      }
+    }
+  }
+}
+void setup(){
+  Serial.begin(115200);
+  delay(1000);
+  xTaskCreate(task_led,"led task",1000,NULL,1,&ledTaskHandle);
+  xTaskCreate(Task_sensor,"tasksensor",1000,NULL,1,NULL);
+}
+void loop(){
+  
+}
