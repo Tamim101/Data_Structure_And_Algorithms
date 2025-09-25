@@ -376,3 +376,86 @@ void setup(){
 void loop(){
   
 }
+
+#define button_pin 4
+#define led_pin 2
+#define buzzer_pin 15
+#define sensor_pin 16
+
+TaskHandle_t ledTaskHandle = NULL;
+TaskHandle_t buzzerTaskHandle = NULL;
+TaskHandle_t sensorTaskHandle = NULL;
+
+QueueHandle_t sensorQueue;
+
+void IRAM_ATTR buttonISR(){   //isr has no printf data or malloc 
+  BaseType_t xHighPriorityTaskWoken = pdFALSE;
+  vTaskNotifyGiveFromISR(ledTaskHandle, &xHighPriorityTaskWoken);
+  if(xHighPriorityTaskWoken) portYIELD_FROM_ISR();
+}
+
+hw_timer_t *timer = NULL;
+void IRAM_ATTR timerISR(){
+  BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+  vTaskNotifyGiveFromISR(buzzerTaskHandle, &xHigherPriorityTaskWoken);
+  if(xHigherPriorityTaskWoken) portYIELD_FROM_ISR();
+}
+
+void IRAM_ATTR sensorISR() {
+    int sensorValue = digitalRead(sensor_pin);
+    BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+    xQueueSendFromISR(sensorQueue, &sensorValue, &xHigherPriorityTaskWoken);
+    if (xHigherPriorityTaskWoken) portYIELD_FROM_ISR();
+}
+
+
+void task_led(void *pvParameters){
+  pinMode(led_pin,OUTPUT);
+  while(1){
+    ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
+    digitalWrite(led_pin, !digitalRead(led_pin));
+  }
+}
+
+void task_buzzer(void *pvParameters){
+  pinMode(buzzer_pin,OUTPUT);  
+  while(1){
+    ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
+    digitalWrite(buzzer_pin,HIGH);   
+    vTaskDelay(100 / portTICK_PERIOD_MS);
+    digitalWrite(buzzer_pin,LOW);
+  }
+}
+void task_sensor(void *pvParameters){
+  int sensorValue;
+  while(1){
+    if(xQueueReceive(sensorQueue, &sensorValue, portMAX_DELAY)){
+      Serial.print("sensor data:");
+      Serial.println(sensorValue);
+    }
+  }
+}
+void setup(){
+  Serial.begin(115200);
+    pinMode(button_pin,INPUT_PULLUP);
+    pinMode(sensor_pin,INPUT);
+    sensorQueue = xQueueCreate(10,sizeof(int));
+
+    xTaskCreate(task_buzzer, "task buzzer", 2048, NULL, 1, &buzzerTaskHandle);
+    xTaskCreate(task_led, "led task", 2048, NULL, 1, &ledTaskHandle);
+    xTaskCreate(task_sensor, "sensor task", 2048, NULL, 1, &sensorTaskHandle);
+
+
+    attachInterrupt(digitalPinToInterrupt(button_pin),buttonISR,FALLING);
+
+    attachInterrupt(digitalPinToInterrupt(sensor_pin),sensorISR,RISING);
+
+    timer = timerBegin(0,80,true);
+    timerAttachInterrupt(timer,&timerISR,true);
+    timerAlarmWrite(timer,1000000,true);
+    timerAlarmEnable(timer);
+  
+}
+void loop(){
+
+}
