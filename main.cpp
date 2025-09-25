@@ -297,3 +297,49 @@ void loop() {
 
 }
 
+TaskHandle_t ledTaskHandle = NULL;
+void Task_button(void *pvParameters){
+  pinMode(4,INPUT_PULLUP);
+  while(1){
+    if(digitalRead(4) == LOW){
+      xTaskNotifyGive(ledTaskHandle);
+      vTaskDelay(300 / portTICK_PERIOD_MS);
+    }
+    vTaskDelay(50 / portTICK_PERIOD_MS);
+  }
+}
+
+void Task_led(void *pvParameters){
+  pinMode(2,INPUT_PULLUP);
+    while(1){
+      // int count = ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
+      // if(count > 0){
+      //   static int press_count = 0;
+      //   press_count++;
+      //   if (press_count == 1) {
+      //     Serial.println("OK, push this button 2nd time");
+      // }
+      //   else if (press_count == 2) {
+      //    Serial.println("Good, now push the button final time");
+      // }
+      //   else if (press_count == 3) {
+      //   Serial.println("Great! Starting system now...");
+      ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
+      ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
+      ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
+      digitalWrite(2, !digitalRead(2));
+      Serial.println("[led task], led on after 3 button presses");
+
+    }
+  }
+  
+void setup(){
+  Serial.begin(115200);
+  delay(1000);
+  xTaskCreate(Task_led,"led task",1000,NULL,1,&ledTaskHandle);
+  xTaskCreate(Task_button,"button task",1000,NULL,1,NULL);
+  
+}
+void loop(){
+  
+}
