@@ -540,3 +540,37 @@ void setup(){
 void loop(){
   
 }
+
+// with mutex
+#include <Arduino.h>
+SemaphoreHandle_t xMutex;
+void Task1(void *pvParameters){
+    while(1){
+        if(xSemaphoreTake(xMutex, portMAX_DELAY) == pdTRUE){
+            Serial.println("Task 1  send the data");
+            xSemaphoreGive(xMutex);
+
+        }
+        vTaskDelay(10 / portTICK_PERIOD_MS);  
+    }
+}
+
+void Task2(void *pvParameters){
+    while(1){
+        if(xSemaphoreTake(xMutex,portMAX_DELAY) == pdTRUE){
+           Serial.println("task 2 send the data");
+           xSemaphoreGive(xMutex);
+        }
+        vTaskDelay(10 / portTICK_PERIOD_MS);
+    }
+}
+void setup(){
+    Serial.begin(115200);
+    delay(1000);
+    xMutex = xSemaphoreCreateMutex();
+    xTaskCreate(Task1,"task one send",1000,NULL,1,NULL);
+    xTaskCreate(Task2,"task two data send",2000,NULL,1,NULL);
+}
+void loop(){
+
+}
