@@ -459,3 +459,57 @@ void setup(){
 void loop(){
 
 }
+TaskHandle_t ledTaskHandle = NULL;
+void Task_for_button(void *pvParameters){
+  pinMode(4,INPUT_PULLUP);
+  int msg = 2;
+  while(1){
+      if(digitalRead(4) == LOW){
+        Serial.println("data transfer in 2 deley time when button press");
+        vTaskDelay(200 / portTICK_PERIOD_MS);
+      }
+      vTaskDelay(50 / portTICK_PERIOD_MS);  //  50 / 1000 delay(messages);
+    
+  }
+}
+  
+
+void Task_arrow_show(void *pvParameters){
+  pinMode(3,OUTPUT);
+  for(;;){
+    int count = ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
+    if(count > 0){
+      static int pass_count = 0;
+      pass_count++;
+      if(pass_count == 1){
+        Serial.println("[led is ok push the button]");
+      }
+      else if(pass_count == 4){
+        Serial.println("[push the 4 button get a message]");
+      }
+      else if(pass_count == 5){
+        Serial.println("[led is bulking on real time......]");
+
+      }
+      // ulTaskGenericNotifyTake(pdTRUE,portMAX_DELAY);
+      // ulTaskGenericNotifyTake(pdTRUE, portMAX_DELAY);
+      // ulTaskGenericNotifyTake(pdTRUE, portMAX_DELAY);
+
+      digitalWrite(3, !digitalRead(3));
+      Serial.println("[led task led did not bulking off]");
+
+
+      }
+    }
+}
+// setup the void call data)
+void setup(){
+  Serial.begin(115200);
+  delay(1000);
+  xTaskCreate(Task_for_button,"task button to play",2024,NULL,1,&ledTaskHandle);
+  xTaskCreate(Task_arrow_show,"task to arrow",2024,NULL,1,NULL);
+}
+
+void loop(){
+
+}
