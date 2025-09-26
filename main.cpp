@@ -513,3 +513,30 @@ void setup(){
 void loop(){
 
 }
+
+void Task1(void *pvParameters){
+  // pinMode(4,INPUT_PULLUP);
+  while(1){
+    Serial.println("task one data send ");
+    vTaskDelay(50/portTICK_PERIOD_MS);
+  }
+}
+
+void Task2(void *pvParameters){
+  // pinMode(2,INPUT_PULLUP);
+  while(1){
+    Serial.println("task data 2 send");
+    vTaskDelay(50 / portTICK_PERIOD_MS);
+
+  }
+}
+
+void setup(){
+  Serial.begin(115200);
+  delay(1000);
+  xTaskCreate(Task1,"task on send data",1000,NULL,1,NULL);
+  xTaskCreate(Task2,"task 2 data send",1200,NULL,1,NULL);
+}
+void loop(){
+  
+}
