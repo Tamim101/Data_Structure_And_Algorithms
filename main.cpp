@@ -574,3 +574,65 @@ void setup(){
 void loop(){
 
 }
+
+#include <Arduino.h>
+#include <freertos/FreeRTOS.h>
+#include <freertos/event_groups.h>
+
+EventGroupHandle_t systemEventGroup;
+
+#define SENSOR_READY (1 << 0)
+#define WIFI_READY   (1 << 1)
+
+void Task_sensor_ready(void *pvParameters) {
+    Serial.println("Starting Sensor Task");
+    vTaskDelay(2000 / portTICK_PERIOD_MS);
+    Serial.println("Sensor initialized");
+    xEventGroupSetBits(systemEventGroup, SENSOR_READY);
+    vTaskDelete(NULL);
+}
+
+void Task_wifi(void *pvParameters) {
+    Serial.println("Starting WiFi Task");
+    vTaskDelay(3000 / portTICK_PERIOD_MS);
+    Serial.println("WiFi initialized");
+    xEventGroupSetBits(systemEventGroup, WIFI_READY);
+    vTaskDelete(NULL);
+}
+
+void Task_motor(void *pvParameters) {
+    Serial.println("Motor Task: Waiting for Sensor and WiFi...");
+    EventBits_t bits = xEventGroupWaitBits(
+        systemEventGroup,
+        SENSOR_READY | WIFI_READY,
+        pdFALSE,
+        pdTRUE,
+        portMAX_DELAY
+    );
+    Serial.println("System ready! Motor can start");
+    vTaskDelay(5000 / portTICK_PERIOD_MS); // Keep task alive for 5 seconds
+    vTaskDelete(NULL);
+}
+
+void setup() {
+    Serial.begin(115200);
+    delay(2000); // Wait for serial to stabilize
+    Serial.println("Setup started");
+
+    systemEventGroup = xEventGroupCreate();
+    if (systemEventGroup == NULL) {
+        Serial.println("Failed to create Event Group!");
+        Serial.flush();
+        while (1);
+    }
+    Serial.println("Event Group created");
+
+    xTaskCreate(Task_sensor_ready, "Sensor", 4096, NULL, 1, NULL);
+    xTaskCreate(Task_wifi, "WiFi", 4096, NULL, 1, NULL);
+    xTaskCreate(Task_motor, "Motor", 8192, NULL, 1, NULL);
+    Serial.println("Tasks created");
+}
+
+void loop() {
+    vTaskDelay(100 / portTICK_PERIOD_MS);
+}
