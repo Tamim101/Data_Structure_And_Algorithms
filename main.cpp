@@ -777,3 +777,61 @@ void setup(){
 void loop(){
     
 }
+
+#include <Arduino.h>
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "freertos/queue.h"
+
+#define BUTTON_POPUP_PIN 4
+#define LED_PIN 2
+
+TaskHandle_t buttonTaskHandle;
+QueueHandle_t commandQueue;
+
+void IRAM_ATTR buttonISR() {
+    if (buttonTaskHandle != NULL) {
+        BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+        vTaskNotifyGiveFromISR(buttonTaskHandle, &xHigherPriorityTaskWoken);
+        if (xHigherPriorityTaskWoken) portYIELD_FROM_ISR();
+    }
+}
+void Task_Button(void *pvParameters){
+    int command = 1;
+    while(1){
+         ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
+        xQueueSend(commandQueue,&command,portMAX_DELAY);
+
+    }
+}
+void Task_Led(void *pvParameters){
+    pinMode(LED_PIN, OUTPUT);
+    int receivedCommand;
+    bool ledState = false;
+    while(1){
+        if(xQueueReceive(commandQueue,& receivedCommand,portMAX_DELAY) == pdPASS){
+            ledState = !ledState;
+            digitalWrite(LED_PIN,ledState);
+            Serial.print("led toggle by command: ");
+
+        }   
+    }
+}
+
+void setup(){
+    Serial.begin(115200);
+    delay(1000);
+    pinMode(BUTTON_POPUP_PIN,INPUT_PULLUP);
+    attachInterrupt(digitalPinToInterrupt(BUTTON_POPUP_PIN),buttonISR,FALLING);
+    commandQueue = xQueueCreate(5, sizeof(int));
+    if(commandQueue == NULL){
+       Serial.println("queue create faild");
+       while(1);
+       xTaskCreate(Task_Button,"button task ",2048,NULL,1,&buttonTaskHandle);
+       xTaskCreate(Task_Led,"led Task",2048,NULL,1,NULL);
+    }
+
+}
+void loop(){
+
+}
