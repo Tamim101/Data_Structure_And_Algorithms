@@ -747,3 +747,33 @@ void setup(){
 void loop(){
 
 }
+
+#define LED_POPUP_PIN 2
+TaskHandle_t led_task_handle;
+
+void Task_Notifier(void *pvParameters){
+    while(1){
+        vTaskDelay(pdMS_TO_TICKS(500));
+        xTaskNotifyGive(led_task_handle);  // send signal
+    }
+}
+void Task_Led(void *pvParameters){
+    pinMode(LED_POPUP_PIN, OUTPUT);
+    bool ledState = false;
+    while(1){
+       ulTaskNotifyTake(pdTRUE,portMAX_DELAY);  // wait for signal
+       ledState = !ledState;
+       digitalWrite(LED_POPUP_PIN,ledState);
+       Serial.println(ledState ? "led on" : "led off");
+    }
+}
+
+void setup(){
+    Serial.begin(115200);
+    delay(1000);  // 1s
+    xTaskCreate(Task_Notifier, "notifier", 2048, NULL, 1, NULL);
+    xTaskCreate(Task_Led,"led task", 2048,NULL,1,&led_task_handle);
+}
+void loop(){
+    
+}
