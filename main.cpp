@@ -676,3 +676,38 @@ void setup(){
 void loop(){
 
 }
+
+#define BUTTON_PIN 4
+#define LED_PIN    2
+TaskHandle_t ledTaskHandle = NULL;
+
+void IRAM_ATTR button(){   // ISR for the button
+   BaseType_t xhigforse = pdFALSE;
+   vTaskNotifyGiveFromISR(ledTaskHandle, &xhigforse);
+   if(xhigforse){
+    portYIELD_FROM_ISR();
+   }
+}
+
+void Task_Led(void *pvParameters){
+    pinMode(LED_PIN,OUTPUT);
+    bool ledState = false;
+    while(1){
+        ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
+        ledState = !ledState;
+        digitalWrite(LED_PIN, ledState);
+        Serial.println(ledState ? "led on" : "led off");
+    }
+}
+void setup(){
+    Serial.begin(115200);
+    delay(1000);
+    pinMode(BUTTON_PIN,INPUT_PULLUP);
+    attachInterrupt(digitalPinToInterrupt(BUTTON_PIN),button,FALLING);
+    xTaskCreate(Task_Led,"led Task",2048,NULL,1,&ledTaskHandle);
+}
+
+void loop(){
+
+} 
+
