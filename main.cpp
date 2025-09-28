@@ -636,3 +636,43 @@ void setup() {
 void loop() {
     vTaskDelay(100 / portTICK_PERIOD_MS);
 }
+
+
+QueueHandle_t dataQueue;
+
+void TaskProducer(void *pvParameters){
+    int value = 0;
+    while(1){
+        value++;
+        if(xQueueSend(dataQueue, &value, portMAX_DELAY) == pdPASS){
+            Serial.print("product");
+            Serial.println(value);
+        }
+        vTaskDelay(1000 / portTICK_PERIOD_MS);
+    }
+}
+void Task_consumer(void *pvParameters){
+    int receivedValue;
+    while(1){
+        if(xQueueReceive(dataQueue, &receivedValue, portMAX_DELAY) == pdPASS){
+            Serial.print("consumed: ");
+            Serial.println(receivedValue);
+        }
+    }
+}
+void setup(){
+    Serial.begin(115200);
+    delay(1000);
+    dataQueue = xQueueCreate(5,sizeof(int));
+    if(dataQueue == NULL){
+        Serial.println("queue creation faild");
+        while(1);
+
+        }
+    xTaskCreate(TaskProducer, "producer", 2024,NULL,1,NULL);
+    xTaskCreate(Task_consumer,"councmer",2024,NULL,1,NULL);
+    
+}
+void loop(){
+
+}
