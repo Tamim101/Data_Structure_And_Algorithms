@@ -118,3 +118,33 @@ int main() {
     
     return 0;
 }
+#include <Arduino.h>
+#include <freertos/FreeRTOS.h>
+#include <freertos/event_groups.h>
+#include <WiFi.h>
+
+EventGroupHandle_t wifiGroup;
+#define WIFI_CONNECTION (1 << 0)
+
+const char* ssid = "Tamim-wifi";
+const char* pass = "tamim9047@";
+
+void Task_Network(void *pv){
+    xEventGroupWaitBits(wifiGroup, WIFI_CONNECTION,pdFALSE,pdTRUE,portMAX_DELAY);
+    Serial.println("now start mqtt or sensor task");
+    vTaskDelete(NULL);
+
+}
+void setup(){
+    Serial.begin(115200);
+    wifiGroup = xEventGroupCreate();
+    WiFi.begin(ssid,pass);
+    while(WiFi.status() != WL_CONNECTED){
+        delay(500);
+    }
+    xEventGroupSetBits(wifiGroup,WIFI_CONNECTION);
+    xTaskCreate(Task_Network,"net task",4096,NULL,1,NULL);
+}
+void loop(){
+    
+}
