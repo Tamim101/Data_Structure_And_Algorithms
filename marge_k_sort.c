@@ -148,3 +148,21 @@ void setup(){
 void loop(){
     
 }
+
+#include <Arduino.h>
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+
+LiquidCrystal_I2C lcd(0x3F, 16, 2); // Use I2C scanner to confirm address
+
+void setup() {
+  Wire.begin(10, 9); // ESP32-C3 I2C pins
+  lcd.init();
+  lcd.backlight();
+  lcd.setCursor(0,0);
+  lcd.print("ESP32-C3 LCD");
+  lcd.setCursor(0,1);
+  lcd.print("FreeRTOS Demo");
+}
+
+void loop() {}
