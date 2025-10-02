@@ -118,51 +118,51 @@ int main() {
     
     return 0;
 }
-#include <Arduino.h>
-#include <freertos/FreeRTOS.h>
-#include <freertos/event_groups.h>
-#include <WiFi.h>
+// #include <Arduino.h>
+// #include <freertos/FreeRTOS.h>
+// #include <freertos/event_groups.h>
+// #include <WiFi.h>
 
-EventGroupHandle_t wifiGroup;
-#define WIFI_CONNECTION (1 << 0)
+// EventGroupHandle_t wifiGroup;
+// #define WIFI_CONNECTION (1 << 0)
 
-const char* ssid = "Tamim-wifi";
-const char* pass = "tamim9047@";
+// const char* ssid = "Tamim-wifi";
+// const char* pass = "tamim9047@";
 
-void Task_Network(void *pv){
-    xEventGroupWaitBits(wifiGroup, WIFI_CONNECTION,pdFALSE,pdTRUE,portMAX_DELAY);
-    Serial.println("now start mqtt or sensor task");
-    vTaskDelete(NULL);
+// void Task_Network(void *pv){
+//     xEventGroupWaitBits(wifiGroup, WIFI_CONNECTION,pdFALSE,pdTRUE,portMAX_DELAY);
+//     Serial.println("now start mqtt or sensor task");
+//     vTaskDelete(NULL);
 
-}
-void setup(){
-    Serial.begin(115200);
-    wifiGroup = xEventGroupCreate();
-    WiFi.begin(ssid,pass);
-    while(WiFi.status() != WL_CONNECTED){
-        delay(500);
-    }
-    xEventGroupSetBits(wifiGroup,WIFI_CONNECTION);
-    xTaskCreate(Task_Network,"net task",4096,NULL,1,NULL);
-}
-void loop(){
+// }
+// void setup(){
+//     Serial.begin(115200);
+//     wifiGroup = xEventGroupCreate();
+//     WiFi.begin(ssid,pass);
+//     while(WiFi.status() != WL_CONNECTED){
+//         delay(500);
+//     }
+//     xEventGroupSetBits(wifiGroup,WIFI_CONNECTION);
+//     xTaskCreate(Task_Network,"net task",4096,NULL,1,NULL);
+// }
+// void loop(){
     
-}
+// }
 
-#include <Arduino.h>
-#include <Wire.h>
-#include <LiquidCrystal_I2C.h>
+// #include <Arduino.h>
+// #include <Wire.h>
+// #include <LiquidCrystal_I2C.h>
 
-LiquidCrystal_I2C lcd(0x3F, 16, 2); // Use I2C scanner to confirm address
+// LiquidCrystal_I2C lcd(0x3F, 16, 2); // Use I2C scanner to confirm address
 
-void setup() {
-  Wire.begin(10, 9); // ESP32-C3 I2C pins
-  lcd.init();
-  lcd.backlight();
-  lcd.setCursor(0,0);
-  lcd.print("ESP32-C3 LCD");
-  lcd.setCursor(0,1);
-  lcd.print("FreeRTOS Demo");
-}
+// void setup() {
+//   Wire.begin(10, 9); // ESP32-C3 I2C pins
+//   lcd.init();
+//   lcd.backlight();
+//   lcd.setCursor(0,0);
+//   lcd.print("ESP32-C3 LCD");
+//   lcd.setCursor(0,1);
+//   lcd.print("FreeRTOS Demo");
+// }
 
-void loop() {}
+// void loop() {}
