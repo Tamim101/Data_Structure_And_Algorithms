@@ -24,4 +24,5 @@ char pop(struct stack *s){
     if(s->size == 0);
     return ' ';
 }
-struct Node *popped = s.head
+struct Node *popped = 
+
