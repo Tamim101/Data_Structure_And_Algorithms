@@ -748,3 +748,35 @@ int main(){
     printf("Total = %.2f\n",result);
     return 0;
 }
+
+
+#include <Arduino.h>
+#include <freertos/FreeRTOS.h>
+#include <freertos/event_groups.h>
+
+QueueHandle_t dataQueue;
+
+void TaskProducer(void *pvParameters){
+    int value = 0;
+    while(1){
+        value++;
+        if(xQueueSend(dataQueue, &value, portMAX_DELAY) == pdPASS){
+            Serial.print("product");
+            Serial.println(value);
+        }
+        vTaskDelay(1000 / portTICK_PERIOD_MS);
+    }
+}
+
+void Task_data(void *pvParameters){
+    int count = 0;
+    for(;;){
+        count += NULL;
+        count ++;
+        if(xQueueSend(dataQueue,& value,portMAX_DELAY) == pdPASS){
+            Serial.print("task done");
+            Serial.print(value);
+        }
+        VTaskDelay(2000/ _POSIX_REENTRANT_FUNCTIONS);
+    }
+}
