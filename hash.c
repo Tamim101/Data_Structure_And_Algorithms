@@ -124,3 +124,15 @@ int hashSetContains(SimpleHashSet *set, const char *value){
     return 0;
 
 }
+int hashSetContains(SimpleHashSet *set, const char *value){
+    unsigned int index = hashFunction(value);
+    Node *node = set->bucket[index];
+    while(node != NULL){
+        if(strcmp(node->value,value) == 0){
+            return 1;
+        }
+        node = node->next;
+    }
+    return 0;
+
+}
