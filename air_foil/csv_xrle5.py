@@ -3,7 +3,7 @@ from pathlib import Path
 import sys, math, csv
 import numpy as np
 
-DEFAULT_NAME = "data.csv"   # your file name
+DEFAULT_NAME = "air_foil/data.csv"   # your file name
 
 def find_header_index(path: Path) -> int:
     with path.open("r", encoding="utf-8", errors="ignore") as f:
@@ -43,12 +43,16 @@ def parse_polar(path: Path):
         alphas.append(a); cls.append(cl); cds.append(cd); cms.append(cm)
     return np.array(alphas), np.array(cls), np.array(cds), np.array(cms)
 
+import numpy as np
+
 def clean_physical(alpha, Cl, Cd, Cm):
+    """Clean aerodynamic data by removing invalid or unrealistic values."""
     ok = np.isfinite(alpha) & np.isfinite(Cl) & np.isfinite(Cd) & np.isfinite(Cm)
     ok &= (Cd > 0.0) & (Cd < 1.0)
     ok &= (np.abs(Cl) < 5.0)
     ok &= (alpha > -30.0) & (alpha < 30.0)
     return alpha[ok], Cl[ok], Cd[ok], Cm[ok]
+
 
 def linfit(x, y):
     X = np.vstack([x, np.ones_like(x)]).T
