@@ -65,3 +65,13 @@ pick_data_x = 0.9
 pick_data_k = 0.5
 total_data = pick_data+(delta*pick_data_k / delta*pick_data_z * pick_data_z)* delta * pick_data_x
 print("Delta data ------------:",total_data)
+
+
+#manometer raduis 
+delta2 = 41500
+dencity = 2
+air_dencity = 1000
+gravity = 0.85
+sin_o = 9.807
+total_radius = (delta2 * 2) / (air_dencity*gravity*sin_o)
+print("total density of radius +==", total_radius)
