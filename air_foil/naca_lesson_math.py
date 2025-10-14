@@ -74,4 +74,15 @@ air_dencity = 1000
 gravity = 0.85
 sin_o = 9.807
 total_radius = (delta2 * 2) / (air_dencity*gravity*sin_o)
-print("total density of radius +==", total_radius)
+while (total_data!=0):
+    if total_radius == 0:
+        print("data is found")
+    elif total_radius == 9.95:
+        print("data is good and equle ",total_radius)
+        break
+    else:
+        print("total density of radius +==", total_radius)
+        break
+
+
+#manometer supersonic waives
