@@ -80,8 +80,12 @@ while (total_data!=0):
     elif total_radius == 9.95:
         print("data is good and equle ",total_radius)
         break
-    else:
+    elif(total_radius >= 0):
         print("total density of radius +==", total_radius)
+        
+        break
+    else:
+        print("data print total ",total_radius)
         break
 
 
