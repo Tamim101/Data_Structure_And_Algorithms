@@ -19,9 +19,25 @@ void heap_example(){
     free(heap_array);
 }
 }
+void heap_extra_data(){
+    int* heap_count = (int*)malloc(10000 * sizeof(int));
+    if(heap_count == NULL){
+        printf("memory allocation faild");
+        return 0;
+    }
+    for(int j = 0; j < 10000; j++){
+        heap_count[j] = j+1;
+    printf("heap count address: %u\n",(void*)heap_count);
+    free(heap_count);
+    heap_count = NULL;
+    free(heap_count);
+    }
+}
+
 int main(){
     stack_example();
     heap_example();
+    heap_extra_data();
     return 0;
 }
     
