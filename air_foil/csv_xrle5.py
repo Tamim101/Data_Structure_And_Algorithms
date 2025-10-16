@@ -103,6 +103,7 @@ def main():
     X = np.vstack([np.ones_like(Cl), Cl**2]).T
     CD0, k = np.linalg.lstsq(X, Cd, rcond=None)[0]
 
+
     print("\nRESULTS")
     print(f"CLmax ≈ {CLmax:.3f} @ α ≈ {a_stall:.1f}°")
     print(f"CDmin ≈ {CDmin:.4f}")

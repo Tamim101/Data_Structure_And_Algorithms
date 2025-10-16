@@ -41,13 +41,13 @@ print(f"Predicted Cm = {Cm_from_geom(best_m, best_p):.3f}")
 print(f"Predicted CL0 = {CL0_from_geom(best_m, best_p):.3f}")
 print(f"Estimated NACA code: {int(best_m*100+0.5)}{int(best_p*10+0.5)}{int(t_c*100+0.5)}")
 
-# the new vortex core equations
-# type  = 0
-# reynolds_number = 60000
-# mach_number = 0.9000
-# forced_top_trans = 1.00
-# total = (math.pi*type+ mach_number*reynolds_number/forced_top_trans) 
-# print("Data sheet is none : ", total)
+#the new vortex core equations
+type  = 0
+reynolds_number = 60000
+mach_number = 0.9000
+forced_top_trans = 1.00
+total = (math.pi*type+ mach_number*reynolds_number/forced_top_trans) 
+print("Data sheet is none : ", total)
 
 type1 = 1
 reynolds_number = 800000
