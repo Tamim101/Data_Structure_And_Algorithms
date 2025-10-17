@@ -1,127 +1,41 @@
-# pitch_sim.py
-# Small-angle 2D pitch simulation (Etkin-style)
-# States: x = [alpha, q, theta]; Input: elevator deflection delta_e (rad)
-# Dynamics:
-#   dot(alpha) = (Z_a/(m*U0)) * alpha + (Z_q/(m*U0) + 1.0) * q + (Z_de/(m*U0)) * delta_e
-#   dot(q)     = (M_a/Iy) * alpha + (M_q/Iy) * q + (M_de/Iy) * delta_e
-#   dot(theta) = q
-#
-# Edit the "USER INPUT" section with your own aircraft data or pipe them in from a file.
 
-import numpy as np
-import matplotlib.pyplot as plt
-import pandas as pd
+# pitch_sim_headless.py
+import os, numpy as np, matplotlib, matplotlib.pyplot as plt, pandas as pd
+matplotlib.use('Agg')
 
-# -----------------------
-# USER INPUT (edit these)
-# -----------------------
-rho   = 1.225      # air density [kg/m^3] (sea level)
-U0    = 16.0       # trim speed [m/s]
-S     = 0.22       # wing area [m^2]
-cbar  = 0.166      # mean aerodynamic chord [m]
-m     = 2.0        # mass [kg]
-Iy    = 0.08       # pitch MOI about CG [kg·m^2]
-
-# Nondimensional aero derivatives (starter values; replace with your data)
-# Signs: Cz positive DOWN. For a typical wing, CZa ≈ -CL_alpha (per rad).
-CZa   = -5.5                           # ∂Cz/∂alpha  [1/rad]
-CZq   = -8.0 * (cbar/(2.0*U0))         # ∂Cz/∂(q)     [1/s]
-CZde  = -0.6                           # ∂Cz/∂(delta_e) [1/rad]
-Cma   = -1.0                           # ∂Cm/∂alpha   [1/rad] (static stability < 0)
-Cmq   = -12.0 * (cbar/(2.0*U0))        # ∂Cm/∂(q)     [1/s]
-Cmde  = -1.1                           # ∂Cm/∂(delta_e) [1/rad]
-
-# Elevator input (deg). Negative here = pull (nose-up) in this sign convention.
-delta_e_step_deg = -5.0
-t_step = 0.2       # [s] time when the step is applied
-
-# Simulation horizon
+rho, U0, S, cbar, m, Iy = 1.225, 16.0, 0.22, 0.166, 2.0, 0.08
+CZa, CZq, CZde, Cma, Cmq, Cmde = -5.5, -0.0415, -0.6, -1.0, -0.06225, -1.1
+delta_e_step_deg, t_step = -5.0, 0.2
 t0, tf, dt = 0.0, 8.0, 0.002
 
-# -----------------------
-# Build model
-# -----------------------
-qbar = 0.5 * rho * U0**2  # dynamic pressure [Pa]
+qbar = 0.5 * rho * U0**2
+Z_a, Z_q, Z_de = qbar*S*CZa, qbar*S*CZq, qbar*S*CZde
+M_a, M_q, M_de = qbar*S*cbar*Cma, qbar*S*cbar*Cmq, qbar*S*cbar*Cmde
 
-# Convert to dimensional derivatives
-Z_a  = qbar * S * CZa                      # [N/rad]
-Z_q  = qbar * S * CZq                      # [N/(rad/s)]
-Z_de = qbar * S * CZde                     # [N/rad]
+A = np.array([[ Z_a/(m*U0), Z_q/(m*U0) + 1.0, 0.0],[ M_a/Iy, M_q/Iy, 0.0],[ 0.0, 1.0, 0.0]])
+B = np.array([[ Z_de/(m*U0) ],[ M_de/Iy ],[ 0.0 ]])
 
-M_a  = qbar * S * cbar * Cma               # [N·m/rad]
-M_q  = qbar * S * cbar * Cmq               # [N·m/(rad/s)]
-M_de = qbar * S * cbar * Cmde              # [N·m/rad]
-
-# State matrices
-A = np.array([
-    [ Z_a/(m*U0),         Z_q/(m*U0) + 1.0, 0.0],
-    [ M_a/Iy,             M_q/Iy,           0.0],
-    [ 0.0,                1.0,              0.0]
-])
-B = np.array([
-    [ Z_de/(m*U0) ],
-    [ M_de/Iy     ],
-    [ 0.0         ]
-])
-
-# -----------------------
-# Input function
-# -----------------------
 delta_e_step = np.deg2rad(delta_e_step_deg)
-def delta_e(t):
-    return delta_e_step if t >= t_step else 0.0
+def delta_e(t): return delta_e_step if t >= t_step else 0.0
 
-# -----------------------
-# Integrate (RK4)
-# -----------------------
-t = np.arange(t0, tf + dt, dt)
-N = len(t)
-x = np.zeros((3, N))  # alpha, q, theta
-
+t = np.arange(t0, tf + dt, dt); N = len(t); x = np.zeros((3, N))
 def f(xvec, tcur):
-    u = np.array([[delta_e(tcur)]])
+    u = np.array([[delta_e(tcur)]]); 
     return (A @ xvec.reshape(-1,1) + B @ u).flatten()
 
 for k in range(N - 1):
     xk, tk = x[:, k], t[k]
-    k1 = f(xk, tk)
-    k2 = f(xk + 0.5*dt*k1, tk + 0.5*dt)
-    k3 = f(xk + 0.5*dt*k2, tk + 0.5*dt)
-    k4 = f(xk + dt*k3,     tk + dt)
+    k1 = f(xk, tk); k2 = f(xk + 0.5*dt*k1, tk + 0.5*dt)
+    k3 = f(xk + 0.5*dt*k2, tk + 0.5*dt); k4 = f(xk + dt*k3, tk + dt)
     x[:, k+1] = xk + (dt/6.0)*(k1 + 2*k2 + 2*k3 + k4)
 
-alpha = x[0, :]
-q     = x[1, :]
-theta = x[2, :]
+alpha, q, theta = x[0,:], x[1,:], x[2,:]
+out_dir = 'air_foil/stage2_data_analysis'; os.makedirs(out_dir, exist_ok=True)
+csv_path = os.path.join(out_dir, 'pitch_simulation_timeseries.csv')
+pd.DataFrame({'t_s': t, 'alpha_deg': np.rad2deg(alpha), 'q_deg_s': np.rad2deg(q), 'theta_deg': np.rad2deg(theta), 'delta_e_deg': [0.0 if ti < t_step else delta_e_step_deg for ti in t]}).to_csv(csv_path, index=False)
 
-# -----------------------
-# Save and plot
-# -----------------------
-df = pd.DataFrame({
-    "t_s": t,
-    "alpha_deg": np.rad2deg(alpha),
-    "q_deg_s": np.rad2deg(q),
-    "theta_deg": np.rad2deg(theta),
-    "delta_e_deg": [0.0 if ti < t_step else delta_e_step_deg for ti in t]
-})
-df.to_csv("air_foil/pitch_simulation_timeseries.csv", index=False)
-print("Saved: air_foil/pitch_simulation_timeseries.csv")
+plt.figure(figsize=(8,4.5)); plt.plot(t, np.rad2deg(alpha)); plt.axvline(t_step, linestyle='--'); plt.xlabel('Time [s]'); plt.ylabel('α [deg]'); plt.title('Elevator step response — α(t)'); plt.grid(True); plt.tight_layout(); plt.savefig(os.path.join(out_dir, 'alpha_response.png'), dpi=150); plt.close()
+plt.figure(figsize=(8,4.5)); plt.plot(t, np.rad2deg(theta)); plt.axvline(t_step, linestyle='--'); plt.xlabel('Time [s]'); plt.ylabel('θ [deg]'); plt.title('Elevator step response — θ(t)'); plt.grid(True); plt.tight_layout(); plt.savefig(os.path.join(out_dir, 'theta_response.png'), dpi=150); plt.close()
+plt.figure(figsize=(8,4.5)); plt.plot(t, np.rad2deg(q)); plt.axvline(t_step, linestyle='--'); plt.xlabel('Time [s]'); plt.ylabel('q [deg/s]'); plt.title('Elevator step response — q(t)'); plt.grid(True); plt.tight_layout(); plt.savefig(os.path.join(out_dir, 'q_response.png'), dpi=150); plt.close()
 
-# One figure per variable
-plt.figure(figsize=(8,4.5))
-plt.plot(t, np.rad2deg(alpha))
-plt.axvline(t_step, linestyle="--")
-plt.xlabel("Time [s]"); plt.ylabel("α [deg]"); plt.title("Elevator step response — α(t)")
-plt.grid(True); plt.tight_layout(); plt.show()
-
-plt.figure(figsize=(8,4.5))
-plt.plot(t, np.rad2deg(theta))
-plt.axvline(t_step, linestyle="--")
-plt.xlabel("Time [s]"); plt.ylabel("θ [deg]"); plt.title("Elevator step response — θ(t)")
-plt.grid(True); plt.tight_layout(); plt.show()
-
-plt.figure(figsize=(8,4.5))
-plt.plot(t, np.rad2deg(q))
-plt.axvline(t_step, linestyle="--")
-plt.xlabel("Time [s]"); plt.ylabel("q [deg/s]"); plt.title("Elevator step response — q(t)")
-plt.grid(True); plt.tight_layout(); plt.show()
+print('Saved:', csv_path)
