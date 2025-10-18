@@ -39,3 +39,31 @@ plt.figure(figsize=(8,4.5)); plt.plot(t, np.rad2deg(theta)); plt.axvline(t_step,
 plt.figure(figsize=(8,4.5)); plt.plot(t, np.rad2deg(q)); plt.axvline(t_step, linestyle='--'); plt.xlabel('Time [s]'); plt.ylabel('q [deg/s]'); plt.title('Elevator step response — q(t)'); plt.grid(True); plt.tight_layout(); plt.savefig(os.path.join(out_dir, 'q_response.png'), dpi=150); plt.close()
 
 print('Saved:', csv_path)
+
+import pandas as pd
+import numpy as np
+
+df = pd.read_csv("air_foil/stage2_data_analysis/pitch_simulation_timeseries.csv")
+t = df["t_s"].values
+q = df["q_deg_s"].values
+
+# find local maxima (very simple peak finder; you can replace with scipy.signal.find_peaks)
+peaks = []
+for i in range(1, len(q)-1):
+    if q[i] > q[i-1] and q[i] > q[i+1]:
+        peaks.append((t[i], q[i]))
+
+# need at least two peaks
+if len(peaks) >= 2:
+    (t1, y1), (t2, y2) = peaks[0], peaks[1]
+    # log decrement
+    delta = np.log(abs(y1)/abs(y2))
+    zeta = delta / np.sqrt(4*np.pi**2 + delta**2)
+    Td = t2 - t1                           # damped period
+    wd = 2*np.pi / Td                      # damped natural frequency
+    wn = wd / np.sqrt(1 - zeta**2)         # natural frequency
+
+    print(f"damping ratio zeta ≈ {zeta:.3f}")
+    print(f"natural freq wn ≈ {wn:.2f} rad/s (≈ {wn/(2*np.pi):.2f} Hz)")
+else:
+    print("Not enough peaks to estimate damping/frequency.")
