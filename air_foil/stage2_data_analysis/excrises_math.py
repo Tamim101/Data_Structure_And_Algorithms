@@ -21,13 +21,5 @@ print("Total passure = ",calculate_passure)
 total_parsentage = math.sqrt((c_macw - c_dmin) / c_dmin)* 100
 print(f"Total parsentage is = {total_parsentage:.2f}% ")
 
-# get dinamic passure 
-velocity_v = v*v
-calculate_passure = 0.5*row_p*velocity_v
-print("Total passure = ",calculate_passure)
-
-# wing drag polar percentage difference
-total_parsentage = math.sqrt((c_macw - c_dmin) / c_dmin)* 100
-print(f"Total parsentage is = {total_parsentage:.2f}% ")
 
 

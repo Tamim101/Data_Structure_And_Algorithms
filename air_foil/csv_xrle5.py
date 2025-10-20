@@ -115,5 +115,18 @@ def main():
     print("  CLmax ~ 1.3–1.5, αstall ~ 11–13°, CDmin ~ 0.010–0.016,")
     print("  CLα ~ 0.09–0.11 per deg (≈ 5–6 per rad), (L/D)max ~ 50–80 (2D)")
 
+
+
+     print("\nRESULTS")
+    print(f"CLmax ≈ {CLmax:.3f} @ α ≈ {a_stall:.1f}°")
+    print(f"CDmin ≈ {CDmin:.4f}")
+    print(f"(L/D)max ≈ {LDmax:.1f} @ α ≈ {a_ldmax:.1f}° (CL ≈ {CL_LDmax:.2f})")
+    print(f"CLα ≈ {CLalpha_per_rad:.2f} per rad  (≈ {CLalpha_per_deg:.3f} per deg),  α_L=0 ≈ {alpha_L0:.1f}°")
+    print(f"Drag polar: Cd ≈ {CD0:.4f} + {k:.4f} · Cl²")
+
+    print("\nExpected bands (NACA 4412 @ Re~2e5):")
+    print("  CLmax ~ 1.3–1.5, αstall ~ 11–13°, CDmin ~ 0.010–0.016,")
+    print("  CLα ~ 0.09–0.11 per deg (≈ 5–6 per rad), (L/D)max ~ 50–80 (2D)")
+
 if __name__ == "__main__":
     main()
