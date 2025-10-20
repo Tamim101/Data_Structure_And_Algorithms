@@ -2,5 +2,10 @@
     "C_Cpp.errorSquiggles": "disabled",
     "files.associations": {
         "stdio.h": "c"
+    },
+
+    "code-runner.executorMap": {
+        "matlab": "octave --persist",
+        "octave": "octave --persist"
     }
 }
